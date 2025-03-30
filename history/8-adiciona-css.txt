@@ -1,0 +1,5 @@
+crie um o css para o projeto sem mecher na tabela maior e nem nas menores...
+
+escreva de forma extremamente minimalista e consisa
+
+o estilo deve lembrar um estoque de madeira e cores quentes

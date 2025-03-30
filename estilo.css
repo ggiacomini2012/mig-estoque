@@ -1,0 +1,64 @@
+/* Estilos gerais - tema estoque de madeira */
+body {
+  background-color: #f5ebe0;
+  font-family: Arial, sans-serif;
+  color: #5e4536;
+  padding: 20px;
+}
+
+h1 {
+  color: #784e3d;
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 3px solid #a57b55;
+  padding-bottom: 10px;
+}
+
+/* Formulário de entrada */
+input {
+  border: 2px solid #a57b55;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #fff9f0;
+}
+
+button {
+  background-color: #a57b55;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+button:hover {
+  background-color: #8b5a2b;
+}
+
+/* Controles das tabelas internas */
+.subtable-controls {
+  margin-bottom: 5px;
+}
+
+/* Personalização das células e visualmente sem alterar a estrutura */
+td[contenteditable="true"]:hover {
+  background-color: #ffe8c9;
+}
+
+td[contenteditable="true"]:focus {
+  background-color: #ffe8c9;
+  outline: 2px solid #daa06d;
+}
+
+/* Efeito de madeira para a página */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h100v100H0z' fill='none'/%3E%3Cpath d='M0 0h100v2H0zM0 20h100v1H0zM0 40h100v1H0zM0 60h100v1H0zM0 80h100v1H0z' fill='%23daa06d' fill-opacity='0.1'/%3E%3C/svg%3E");
+  z-index: -1;
+} 
