@@ -1,0 +1,45 @@
+As palavras-chave "MUST" (DEVE), "MUST NOT" (NÃO DEVE), "REQUIRED" (OBRIGATÓRIO), "SHALL" (DEVERÁ), 
+"SHALL NOT" (NÃO DEVERÁ), "SHOULD" (DEVERIA), "SHOULD NOT" (NÃO DEVERIA), "RECOMMENDED" (RECOMENDADO), 
+"MAY" (PODE) e "OPTIONAL" (OPCIONAL) neste documento devem ser interpretadas conforme descrito na RFC 2119.
+
+Os commits DEVEM ser prefixados com um tipo, que consiste em um substantivo, como "feat", "fix", etc., 
+seguido por um escopo OPCIONAL, um "!" OPCIONAL e dois pontos e um espaço OBRIGATÓRIOS.
+
+- O tipo "feat" DEVE ser usado quando um commit adiciona uma nova funcionalidade ao seu aplicativo ou biblioteca.
+- O tipo "fix" DEVE ser usado quando um commit representa uma correção de bug.
+- Um escopo PODE ser fornecido após o tipo. O escopo DEVE consistir em um substantivo que descreve uma 
+  seção do código, entre parênteses, por exemplo: "fix(parser):".
+
+Uma descrição DEVE seguir imediatamente após os dois pontos e o espaço do prefixo tipo/escopo. 
+A descrição é um resumo breve das alterações no código, por exemplo:
+"fix: problema ao analisar array quando havia múltiplos espaços na string."
+
+- Um corpo de commit mais longo PODE ser fornecido após a descrição curta, fornecendo informações 
+  contextuais adicionais sobre as alterações. O corpo DEVE começar uma linha após a descrição.
+- O corpo do commit é de formato livre e PODE consistir em vários parágrafos separados por quebras de linha.
+
+Um ou mais rodapés PODE(M) ser fornecidos uma linha após o corpo. Cada rodapé DEVE consistir em um token 
+de palavra, seguido por um separador ": " ou " #", e depois um valor de string (inspirado na convenção 
+de trailers do Git).
+
+- O token de um rodapé DEVE usar "-" no lugar de espaços, por exemplo, "Acked-by" (isso ajuda a diferenciar 
+  o rodapé de um corpo com múltiplos parágrafos). Uma exceção é feita para "BREAKING CHANGE", que TAMBÉM PODE 
+  ser usado como token.
+- O valor do rodapé PODE conter espaços e quebras de linha, e a análise DEVE terminar quando o próximo 
+  par válido de token/separador for encontrado.
+
+Mudanças significativas (BREAKING CHANGE) DEVEM ser indicadas no prefixo tipo/escopo do commit ou em um rodapé.
+
+- Se incluído no rodapé, uma mudança significativa DEVE consistir no texto em maiúsculas "BREAKING CHANGE", 
+  seguido por dois pontos, espaço e uma descrição, por exemplo:
+  "BREAKING CHANGE: variáveis de ambiente agora têm prioridade sobre arquivos de configuração."
+- Se incluído no prefixo tipo/escopo, mudanças significativas DEVEM ser indicadas por um "!" imediatamente 
+  antes dos ":". Se "!" for usado, "BREAKING CHANGE:" PODE ser omitido do rodapé, e a descrição do commit 
+  SERÁ usada para descrever a mudança.
+
+- Tipos além de "feat" e "fix" PODEM ser usados nas mensagens de commit, por exemplo: "docs: atualiza documentação."
+
+As unidades de informação que compõem os Conventional Commits NÃO DEVEM ser tratadas como sensíveis a maiúsculas/minúsculas, 
+exceto "BREAKING CHANGE", que DEVE estar em maiúsculas.
+
+- "BREAKING-CHANGE" DEVE ser sinônimo de "BREAKING CHANGE" quando usado como token em um rodapé.

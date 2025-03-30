@@ -1,0 +1,5 @@
+crie um arquivo js que adiciona um evento de clique com o botao direito do mouse a todos tds que estao dentro de uma table que esteja dentro de um td e esse evento faz aparecer um balao com a pergunta de queremos deletar a linha da table
+
+sem css 
+
+escreva de forma extremamente minimalista e consisa

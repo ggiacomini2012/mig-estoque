@@ -6,6 +6,7 @@ Sistema simples para controle de estoque com funcionalidades para:
 - Adicionar e remover itens em tabelas
 - Entrada rápida de produtos através de texto em formato específico
 - Edição inline de todos os campos
+- Remoção de itens com clique direito
 
 ## Uso
 
@@ -13,6 +14,7 @@ Sistema simples para controle de estoque com funcionalidades para:
 2. Use o campo de texto superior para adicionar produtos rapidamente no formato: `A10 203 preta 204 206 208 branco 204`
 3. Clique no botão "+" para adicionar linhas individuais nas tabelas
 4. Edite diretamente qualquer célula clicando nela
+5. Use o clique direito em qualquer célula para remover uma linha inteira
 
 ## Estrutura
 
@@ -20,4 +22,5 @@ Sistema simples para controle de estoque com funcionalidades para:
 - `script.js` - Adiciona IDs a todos os elementos
 - `editable.js` - Torna as células editáveis
 - `table-editor.js` - Adiciona botões para gerenciar linhas
-- `input-parser.js` - Processa entrada de texto para adicionar produtos em massa 
+- `input-parser.js` - Processa entrada de texto para adicionar produtos em massa
+- `row-remover.js` - Permite remoção de linhas com clique direito 
