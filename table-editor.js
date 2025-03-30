@@ -29,22 +29,22 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Generate next row code
         const nextNum = table.rows.length;
-        const code = `${andar}${colLetter}${nextNum.toString().padStart(2, '0')}`;
+        const code = `-`;
         
         // Create new row
         const newRow = table.insertRow();
         
         // Add cells: Qtd, COD, COR
         const qtdCell = newRow.insertCell();
-        qtdCell.textContent = '1';
+        qtdCell.textContent = '';
         qtdCell.setAttribute('contenteditable', 'true');
         
         const codCell = newRow.insertCell();
-        codCell.textContent = code;
+        codCell.textContent = '';
         codCell.setAttribute('contenteditable', 'true');
         
         const corCell = newRow.insertCell();
-        corCell.textContent = '-';
+        corCell.textContent = '';
         corCell.setAttribute('contenteditable', 'true');
       };
       
