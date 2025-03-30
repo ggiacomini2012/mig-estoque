@@ -1,0 +1,13 @@
+crie um js
+
+sem css 
+
+vamos refatorar o auto-save.js
+
+o salvamento deve manter todas as caracteristicas e attributos anteriores que foram herdadas por js anteriores
+
+caso vc ache que é uma task muito ampla podemos discutir melhor
+
+
+
+escreva de forma extremamente minimalista e consisa

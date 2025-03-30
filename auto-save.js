@@ -11,7 +11,15 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Substituir a tabela existente pela versão salva
       tempDiv.innerHTML = savedHTML;
-      tableContainer.replaceChild(tempDiv.firstElementChild, mainTable);
+      const savedTable = tempDiv.firstElementChild;
+      
+      // Preservar eventos e funcionalidades após carregar
+      document.dispatchEvent(new CustomEvent('beforeTableRestore', { detail: savedTable }));
+      
+      tableContainer.replaceChild(savedTable, mainTable);
+      
+      // Reabilitar edição e outros manipuladores de eventos
+      document.dispatchEvent(new CustomEvent('tableRestored', { detail: savedTable }));
       
       console.log('Carregado do localStorage');
     } catch (e) {
@@ -23,6 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
   setInterval(function() {
     const currentTable = document.querySelector('table');
     if (currentTable) {
+      // Salvar o estado antes de alterações
+      document.dispatchEvent(new CustomEvent('beforeTableSave', { detail: currentTable }));
+      
       localStorage.setItem(STORAGE_KEY, currentTable.outerHTML);
       console.log('Estado salvo: ' + new Date().toLocaleTimeString());
     }

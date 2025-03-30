@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Adicionar evento de contexto (clique direito) a todas células em subtabelas
+  // Usando event delegation para o evento de contexto (clique direito)
+  // Isso já funciona mesmo após a tabela ser restaurada, pois o listener é no document
   document.addEventListener('contextmenu', function(e) {
     const cell = e.target.closest('td');
     if (!cell) return;
