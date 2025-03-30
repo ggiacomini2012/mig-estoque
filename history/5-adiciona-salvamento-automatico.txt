@@ -1,0 +1,11 @@
+crie um js
+
+sem css 
+
+salva todo o html no localstorage a cada 2 segundos
+
+ao iniciar a duas opcoes se temos um localstorage carregamos o localstorage senao carregamos o html normal
+
+
+
+escreva de forma extremamente minimalista e consisa
