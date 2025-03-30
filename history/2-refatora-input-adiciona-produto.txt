@@ -1,0 +1,13 @@
+vamos refatorar para reforçar
+
+no exemplo abaixo vou explicar melhor a lógica:
+A10 203 preta 204 206 208 branco 204
+
+aqui a celula é A10
+o item 203 tem a cor preta porque esta está ao seu lado direito
+o item 208 tem a cor preta porque está no seu lado direito
+ou seja somente os codigos que tem cor al lado direito possuem cor
+o 204 206 nao possuem cor por isso pode preencher com um -
+na hora de criar o td COD deve ser preenchido somente com o novo COD exemplo 203
+
+escreva de forma extremamente minimalista e consisa

@@ -1,0 +1,23 @@
+quero um arquivo js
+
+sem css
+
+o html necessario deve ser gerado pelo arquivo js
+
+que cria um input
+
+neste input eu escreverei um texto no seguinte formato:
+
+A10 203 preta 204 206 208 branco 204
+
+e depois de escrever isso
+
+clicarei num botao escrito aplicar
+
+o resultado disso é que sera adicionado ao andar 10 coluna A os seguintes tds
+<tr><td contenteditable="true">1</td><td contenteditable="true">203</td><td contenteditable="true">preta</td></tr>
+<tr><td contenteditable="true">2</td><td contenteditable="true">204</td><td contenteditable="true">-</td></tr>
+<tr><td contenteditable="true">1</td><td contenteditable="true">206</td><td contenteditable="true">-</td></tr>
+<tr><td contenteditable="true">1</td><td contenteditable="true">208</td><td contenteditable="true">branco</td></tr>
+
+escreva de forma extremamente minimalista e consisa

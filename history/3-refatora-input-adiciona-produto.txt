@@ -1,0 +1,10 @@
+vamos refatorar para reforçar
+
+no exemplo abaixo vou explicar melhor a lógica:
+A criação das tabelas esta quase perfeita
+Vamos adicionar uma logica que quando são criadas tudas ou mais tds iguais elas são convertidas em uma so e a quantidade é aumentada.
+
+exemplo se tivermos 3 204 ao inves de criar 3 linhas sera criada uma so mas a Qtd. será 3
+
+
+escreva de forma extremamente minimalista e consisa
