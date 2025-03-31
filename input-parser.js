@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const text = input.value.trim();
     if (!text) return;
     
-    const parts = text.split(' ');
+    const parts = text.split(/\s+/);
     if (parts.length < 2) return;
     
     // Extrair localização (ex: A10)
@@ -53,17 +53,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const color = hasColor ? parts[i + 1] : '-';
         
         // Criar uma chave única combinando código e cor
-        const uniqueKey = `${part}-${color}`;
+        const key = `${part}-${color}`;
         
         // Incrementar quantidade ou criar novo
-        if (!products[uniqueKey]) {
-          products[uniqueKey] = { 
+        if (!products[key]) {
+          products[key] = { 
             code: part,
             qty: 1, 
             color: color 
           };
         } else {
-          products[uniqueKey].qty++;
+          products[key].qty++;
         }
       }
     }
@@ -77,44 +77,46 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Gerar tabela
-    let table = `
-      <table>
-        <thead>
-          <tr>
-            <th>Código</th>
-            <th>Quantidade</th>
-            <th>Cor</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-    `;
-
-    sortedProducts.forEach(product => {
-      // Adicionar nova linha
-      const newRow = targetTable.insertRow();
-      
-      // Células: Qtd, COD, COR
-      const qtdCell = newRow.insertCell();
-      qtdCell.textContent = product.qty;
-      qtdCell.setAttribute('contenteditable', 'true');
-      
-      const codCell = newRow.insertCell();
-      codCell.textContent = product.code;
-      codCell.setAttribute('contenteditable', 'true');
-      
-      const corCell = newRow.insertCell();
-      corCell.textContent = product.color;
-      corCell.setAttribute('contenteditable', 'true');
+    targetTable.innerHTML = '';
+    const table = document.createElement('table');
+    
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    ['Código', 'Quantidade', 'Cor', 'Ações'].forEach(text => {
+      const th = document.createElement('th');
+      th.textContent = text;
+      headerRow.appendChild(th);
     });
-
-    table += `
-        </tbody>
-      </table>
-    `;
-
-    // Adicionar tabela ao targetTable
-    targetTable.innerHTML = table;
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+    
+    const tbody = document.createElement('tbody');
+    sortedProducts.forEach(product => {
+      const tr = document.createElement('tr');
+      
+      const codCell = document.createElement('td');
+      codCell.textContent = product.code;
+      codCell.setAttribute('contenteditable', true);
+      
+      const qtyCell = document.createElement('td');
+      qtyCell.textContent = product.qty;
+      qtyCell.setAttribute('contenteditable', true);
+      
+      const colorCell = document.createElement('td');
+      colorCell.textContent = product.color;
+      colorCell.setAttribute('contenteditable', true);
+      
+      const actionsCell = document.createElement('td');
+      
+      tr.appendChild(codCell);
+      tr.appendChild(qtyCell);
+      tr.appendChild(colorCell);
+      tr.appendChild(actionsCell);
+      tbody.appendChild(tr);
+    });
+    
+    table.appendChild(tbody);
+    targetTable.appendChild(table);
     
     // Limpar input após processamento
     input.value = '';
