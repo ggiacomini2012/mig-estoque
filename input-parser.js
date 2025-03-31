@@ -40,47 +40,71 @@ document.addEventListener('DOMContentLoaded', function() {
     const targetTable = targetCell.querySelector('.subtable');
     if (!targetTable) return;
     
+    // Verificar se já existem produtos na tabela e adicioná-los ao objeto de produtos
+    const existingProducts = {};
+    
+    // Pular a primeira linha (cabeçalho)
+    for (let i = 1; i < targetTable.rows.length; i++) {
+      const row = targetTable.rows[i];
+      if (row.cells.length >= 3) {
+        const qty = parseInt(row.cells[0].textContent) || 0;
+        const code = row.cells[1].textContent;
+        const color = row.cells[2].textContent;
+        const key = `${code}_${color}`;
+        
+        existingProducts[key] = {
+          qty: qty,
+          code: code,
+          color: color
+        };
+      }
+    }
+    
     // Agrupar códigos e suas quantidades
-    const products = {};
+    let currentColor = '-';
     
     for (let i = 1; i < parts.length; i++) {
       const part = parts[i];
       
       // Se for número, é um código de produto
       if (/^\d+$/.test(part)) {
-        // Verificar se o próximo item é uma cor
-        const hasColor = i + 1 < parts.length && !/^\d+$/.test(parts[i + 1]);
-        const color = hasColor ? parts[i + 1] : '-';
+        const code = part;
+        const key = `${code}_${currentColor}`;
         
-        // Incrementar quantidade ou criar novo
-        if (!products[part]) {
-          products[part] = { qty: 1, color: color };
+        // Se o código+cor não existir, criar novo
+        if (!existingProducts[key]) {
+          existingProducts[key] = { qty: 1, code: code, color: currentColor };
         } else {
-          products[part].qty++;
-          // Manter a cor se já existir uma que não seja '-'
-          if (color !== '-' && products[part].color === '-') {
-            products[part].color = color;
-          }
+          // Se já existir, apenas incrementar quantidade
+          existingProducts[key].qty++;
         }
+      } else {
+        // Se não for número, é uma cor
+        currentColor = part;
       }
     }
     
+    // Limpar a tabela existente (exceto o cabeçalho)
+    while (targetTable.rows.length > 1) {
+      targetTable.deleteRow(1);
+    }
+    
     // Adicionar produtos à tabela
-    for (const code in products) {
+    for (const key in existingProducts) {
       // Adicionar nova linha
       const newRow = targetTable.insertRow();
       
       // Células: Qtd, COD, COR
       const qtdCell = newRow.insertCell();
-      qtdCell.textContent = products[code].qty;
+      qtdCell.textContent = existingProducts[key].qty;
       qtdCell.setAttribute('contenteditable', 'true');
       
       const codCell = newRow.insertCell();
-      codCell.textContent = code;
+      codCell.textContent = existingProducts[key].code;
       codCell.setAttribute('contenteditable', 'true');
       
       const corCell = newRow.insertCell();
-      corCell.textContent = products[code].color;
+      corCell.textContent = existingProducts[key].color;
       corCell.setAttribute('contenteditable', 'true');
     }
     
