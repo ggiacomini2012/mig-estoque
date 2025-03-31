@@ -52,37 +52,69 @@ document.addEventListener('DOMContentLoaded', function() {
         const hasColor = i + 1 < parts.length && !/^\d+$/.test(parts[i + 1]);
         const color = hasColor ? parts[i + 1] : '-';
         
+        // Criar uma chave única combinando código e cor
+        const uniqueKey = `${part}-${color}`;
+        
         // Incrementar quantidade ou criar novo
-        if (!products[part]) {
-          products[part] = { qty: 1, color: color };
+        if (!products[uniqueKey]) {
+          products[uniqueKey] = { 
+            code: part,
+            qty: 1, 
+            color: color 
+          };
         } else {
-          products[part].qty++;
-          // Manter a cor se já existir uma que não seja '-'
-          if (color !== '-' && products[part].color === '-') {
-            products[part].color = color;
-          }
+          products[uniqueKey].qty++;
         }
       }
     }
     
-    // Adicionar produtos à tabela
-    for (const code in products) {
+    // Ordenar produtos por código e cor
+    const sortedProducts = Object.values(products).sort((a, b) => {
+      if (a.code !== b.code) {
+        return a.code.localeCompare(b.code);
+      }
+      return a.color.localeCompare(b.color);
+    });
+
+    // Gerar tabela
+    let table = `
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Quantidade</th>
+            <th>Cor</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+    sortedProducts.forEach(product => {
       // Adicionar nova linha
       const newRow = targetTable.insertRow();
       
       // Células: Qtd, COD, COR
       const qtdCell = newRow.insertCell();
-      qtdCell.textContent = products[code].qty;
+      qtdCell.textContent = product.qty;
       qtdCell.setAttribute('contenteditable', 'true');
       
       const codCell = newRow.insertCell();
-      codCell.textContent = code;
+      codCell.textContent = product.code;
       codCell.setAttribute('contenteditable', 'true');
       
       const corCell = newRow.insertCell();
-      corCell.textContent = products[code].color;
+      corCell.textContent = product.color;
       corCell.setAttribute('contenteditable', 'true');
-    }
+    });
+
+    table += `
+        </tbody>
+      </table>
+    `;
+
+    // Adicionar tabela ao targetTable
+    targetTable.innerHTML = table;
     
     // Limpar input após processamento
     input.value = '';
