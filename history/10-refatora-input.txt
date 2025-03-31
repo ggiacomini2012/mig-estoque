@@ -1,0 +1,34 @@
+
+
+
+no arquivo input-parser.js
+observe como o input esta se comportando
+
+se eu coloco 
+A1 203 branca 203 preta 203 203
+
+eu me devolve 4 203 branca
+porem o correto é 1 203 branca 1 203 preta e 2 203 sem correto
+
+todo o arquivo esta certo porém ha um pequena logica dnado errado
+
+escreva de forma extremamente minimalista e consisa
+
+atualmente o codigo esta me devolvendo
+de isso:
+A10 203 branca 203 preta 203 203
+
+4 203 -
+
+deveria ser:
+1 203 branca
+1 203 preta
+2 203 -
+
+e se eu reaplico o input:
+A10 203 branca 203 preta 203 203 203 203
+
+deveria ser:
+2 203 branca
+2 203 preta
+6 203 -

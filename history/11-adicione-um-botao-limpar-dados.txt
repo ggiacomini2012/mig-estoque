@@ -1,0 +1,6 @@
+Escreva um arquivo js que adiciona um batoa que limpa os dados da tabela e do localstorage
+sem css
+nao altere o index.html somente adicione o arquivo.js que criar
+
+escreva de forma extremamente minimalista e consisa
+
