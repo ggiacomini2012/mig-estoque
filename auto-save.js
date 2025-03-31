@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   const STORAGE_KEY = 'estoque-html-state';
-  const mainTable = document.querySelector('table');
+  const mainTable = document.getElementById('estoque-table');
   
   // Carregar do localStorage se existir
   if (localStorage.getItem(STORAGE_KEY)) {
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Configurar salvamento automático a cada 2 segundos
   setInterval(function() {
-    const currentTable = document.querySelector('table');
+    const currentTable = document.getElementById('estoque-table');
     if (currentTable) {
       // Salvar o estado antes de alterações
       document.dispatchEvent(new CustomEvent('beforeTableSave', { detail: currentTable }));
