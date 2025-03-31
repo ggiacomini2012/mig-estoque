@@ -1,0 +1,10 @@
+Escreva um arquivo js novo
+nao altere os arquivos antigos
+
+o novo js deverá:
+lever o input e mostrar uma previa do que vai ser adicionado no input
+
+sem css
+
+escreva de forma extremamente minimalista e consisa
+
