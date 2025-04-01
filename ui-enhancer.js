@@ -176,7 +176,7 @@ function addLoadingTransitions() {
   // Stagger animations for a more professional effect
   mainElements.forEach((element, index) => {
     element.style.opacity = '0';
-    element.style.animation = `fadeIn 0.4s ease-out ${index * 0.15}s forwards`;
+    element.style.animation = `fadeIn 0.4s ease-out ${index * 0.09}s forwards`;
   });
   
   // Add animation styles if not present
