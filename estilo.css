@@ -352,3 +352,122 @@ table {
 .each-macro-cell {
   align-content: baseline;
 }
+
+/* Estilos para colaboração em tempo real */
+.user-indicator {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: #3498db;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.remote-change {
+  animation: highlight 2s ease-in-out;
+}
+
+@keyframes highlight {
+  0% { background-color: #ffff99; }
+  100% { background-color: transparent; }
+}
+
+/* Estilos para usuários editando simultaneamente */
+.cell-being-edited {
+  position: relative;
+}
+
+.cell-being-edited::after {
+  content: attr(data-editor);
+  position: absolute;
+  top: -18px;
+  left: 0;
+  background-color: #e74c3c;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+/* Cursor personalizado para células editáveis */
+td[contenteditable="true"] {
+  cursor: text;
+}
+
+/* Tornar células editáveis mais óbvias */
+td[contenteditable="true"]:hover {
+  background-color: #f5f5f5;
+}
+
+/* Status de conexão */
+.connection-status {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 1000;
+}
+
+.connection-status.online {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.connection-status.offline {
+  background-color: #e74c3c;
+  color: white;
+}
+
+/* Estilos para autenticação */
+.auth-container {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#login-section, #user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#username-input {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+#login-btn, #logout-btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+#login-btn {
+  background-color: #3498db;
+  color: white;
+}
+
+#logout-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+#username-display {
+  font-size: 14px;
+  font-weight: bold;
+}

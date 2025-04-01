@@ -1,0 +1,17 @@
+crie um arquivo js que cria divs pata todos as tags the estao acima do:
+
+create a new js file that create new divs for every element above 
+    <table border="1">
+    <thead>
+      <tr>
+        <th>ANDAR</th>
+        <th>TAMANHO</th>
+        <th>A</th>
+        <th>B</th>
+        <th>C</th>
+        <th>D</th>
+      </tr>
+    </thead>
+
+esse codigo deve observar se sao criadas novos tags dinamicamente e aplicar classes e estilo
+o codigo deve ser minimalista e consiso
