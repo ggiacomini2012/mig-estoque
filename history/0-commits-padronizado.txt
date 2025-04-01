@@ -44,5 +44,8 @@ exceto "BREAKING CHANGE", que DEVE estar em maiúsculas.
 
 - "BREAKING-CHANGE" DEVE ser sinônimo de "BREAKING CHANGE" quando usado como token em um rodapé.
 
+adicione tudo, commite e push...
+
+não altere nenhum codigo!
 
 commite e faça o push!

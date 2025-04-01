@@ -1,0 +1,19 @@
+Escreva um arquivo js novo
+nao altere os arquivos antigos
+
+o novo js deverá:
+
+eu quero um arquivo js que adiciona uma classe a todos os td que contem um table dentro:
+resultado:
+        <td>GG</td>
+        <td class="each-macro-cell">
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+
+
+
+escreva de forma extremamente minimalista e consisa
+
