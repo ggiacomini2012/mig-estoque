@@ -1,6 +1,21 @@
 // Script para gerar configuração do Firebase a partir de variáveis de ambiente
-require('dotenv').config();
+// No ambiente Netlify, as variáveis vêm diretamente de process.env
+// Em ambiente local, carregamos do arquivo .env
+try {
+  require('dotenv').config();
+} catch (error) {
+  console.log('Executando sem dotenv, provavelmente em ambiente Netlify');
+}
+
 const fs = require('fs');
+
+// Verificar se está rodando no Netlify
+const isNetlify = process.env.NETLIFY === 'true';
+if (isNetlify) {
+  console.log('Detectado ambiente Netlify: gerando firebase-config.js com variáveis de ambiente do Netlify');
+} else {
+  console.log('Ambiente local: gerando firebase-config.js com variáveis do arquivo .env');
+}
 
 // Obter as variáveis de ambiente
 const firebaseConfig = {
@@ -19,16 +34,17 @@ const missingVars = Object.entries(firebaseConfig)
   .map(([key]) => key);
 
 if (missingVars.length > 0) {
-  console.error('Erro: Variáveis de ambiente ausentes no arquivo .env:');
+  console.warn('Aviso: Algumas variáveis de ambiente estão ausentes:');
   missingVars.forEach(variable => {
-    console.error(`- ${variable}`);
+    console.warn(`- ${variable}`);
   });
-  process.exit(1);
+  console.warn('O script continuará, mas algumas funcionalidades do Firebase podem não funcionar corretamente.');
+  // Não interrompemos a execução, mesmo com variáveis faltando
 }
 
 // Conteúdo do arquivo de configuração
-const fileContent = `// Configuração do Firebase - Gerado automaticamente a partir do .env
-// NÃO EDITE ESTE ARQUIVO DIRETAMENTE - Use o arquivo .env
+const fileContent = `// Configuração do Firebase - Gerado automaticamente pelo script
+// NÃO EDITE ESTE ARQUIVO DIRETAMENTE - Use variáveis de ambiente
 const firebaseConfig = ${JSON.stringify(firebaseConfig, null, 2)};
 
 // Inicializar Firebase

@@ -1,4 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // Verificar se o Firebase foi inicializado corretamente
+  if (typeof db === 'undefined' || typeof auth === 'undefined') {
+    console.error('Firebase não está inicializado corretamente. Verifique se firebase-config.js foi carregado.');
+    // Adicionar uma mensagem de erro visível para o usuário
+    const errorMsg = document.createElement('div');
+    errorMsg.style.color = 'red';
+    errorMsg.style.padding = '10px';
+    errorMsg.style.margin = '10px';
+    errorMsg.style.backgroundColor = '#ffeeee';
+    errorMsg.style.border = '1px solid red';
+    errorMsg.textContent = 'Erro: Firebase não inicializado corretamente. A autenticação está desativada.';
+    document.body.prepend(errorMsg);
+    return; // Interromper a execução do script
+  }
+
   // Criar elementos de UI para login
   const authContainer = document.createElement('div');
   authContainer.className = 'auth-container';
