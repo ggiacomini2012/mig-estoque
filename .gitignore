@@ -1,0 +1,50 @@
+# Arquivos de configuração do Firebase com chaves sensíveis
+firebase-config.js
+env-setup-netlify.sh
+env-setup-github.sh
+env-setup.sh
+*-setup.sh
+!*-setup.example.sh
+!*-setup-*.example.sh
+gh-installer.msi
+
+# Credenciais e tokens
+.netlify/state.json
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cer
+secrets.json
+*_secret*
+*_token*
+
+# Dependências
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Arquivos de ambiente
+.env
+.env.*
+!.env.example
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Arquivos de compilação
+/build
+/dist
+
+# Outros
+.DS_Store
+.idea/
+.vscode/
+*.log
+*.tmp
+*~
+# Local Netlify folder
+.netlify
