@@ -1,4 +1,9 @@
-// Configuração do Firebase
+// Configuração do Firebase - ARQUIVO DE EXEMPLO
+// Para configurar o Firebase:
+// 1. Copie este arquivo para "firebase-config.js"
+// 2. Substitua os valores de exemplo abaixo pelas suas credenciais do Firebase
+// 3. Certifique-se de não commitar o arquivo firebase-config.js (ele deve estar no .gitignore)
+
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
