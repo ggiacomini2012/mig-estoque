@@ -67,6 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
   function saveToFirebase(cell) {
     if (!mainTable || isLocalUpdate) return;
     
+    console.log("Tentando salvar célula no Firebase:", cell);
+    
     // Identificar a célula alterada
     const row = cell.closest('tr');
     const cellIndex = Array.from(row.cells).indexOf(cell);
@@ -77,6 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const parentTable = cell.closest('table');
     tableId = parentTable.id || 'unknown';
     
+    console.log(`Salvando dados: Tabela=${tableId}, Linha=${rowIndex}, Célula=${cellIndex}, Valor=${cell.innerHTML}`);
+    
     // Criar caminho no banco de dados
     const path = `${tableId}/${rowIndex}/${cellIndex}`;
     
@@ -85,13 +89,19 @@ document.addEventListener('DOMContentLoaded', function() {
       value: cell.innerHTML,
       updatedBy: currentUser ? currentUser.uid.substring(0, 6) : 'unknown',
       timestamp: firebase.database.ServerValue.TIMESTAMP
+    }).then(() => {
+      console.log("Dados salvos com sucesso no Firebase:", path);
+    }).catch(error => {
+      console.error("Erro ao salvar no Firebase:", error);
     });
   }
   
   // Escutar alterações em todas as células da tabela
   document.addEventListener('input', function(e) {
+    console.log("Evento de input detectado:", e.target);
     if (e.target.tagName === 'TD' || e.target.closest('td')) {
       const cell = e.target.tagName === 'TD' ? e.target : e.target.closest('td');
+      console.log("Célula detectada para salvar:", cell);
       saveToFirebase(cell);
     }
   });
