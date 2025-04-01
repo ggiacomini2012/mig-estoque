@@ -1,0 +1,17 @@
+{
+  "name": "mig-estoque",
+  "version": "1.0.0",
+  "description": "Sistema simples para controle de estoque com funcionalidades para:",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-config": "node generate-config.js",
+    "start": "npm run generate-config && echo 'Configuração gerada. Abra o index.html no navegador.'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  }
+}
