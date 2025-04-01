@@ -9,7 +9,7 @@ O Netlify é uma plataforma de hospedagem e automação para aplicações web mo
 - HTTPS automático e gratuito
 - CDN global para melhor performance
 - Funções serverless para backend leve
-- Variáveis de ambiente seguras para suas credenciais
+- Variáveis de ambiente para configuração do build
 
 ## Pré-requisitos
 
@@ -23,7 +23,7 @@ Antes de fazer o deploy, certifique-se de que seu projeto está configurado corr
 
 1. Se estiver usando o Firebase com variáveis de ambiente:
    - Certifique-se de que o arquivo `firebase-config.js` está no `.gitignore`
-   - Você irá configurar essas variáveis diretamente no Netlify, mais adiante
+   - Você irá configurar essas variáveis no Netlify para o processo de build
 
 2. Para sites estáticos (como este projeto), não é necessário um arquivo de configuração especial para o Netlify, mas você pode criar um arquivo `netlify.toml` na raiz do projeto para configurações específicas:
 
@@ -57,6 +57,8 @@ Antes de fazer o deploy, certifique-se de que seu projeto está configurado corr
 7. Clique em **"Deploy site"**
 
 ## Passo 3: Configurar variáveis de ambiente para o Firebase
+
+> **IMPORTANTE**: Em aplicações frontend (client-side), as variáveis de ambiente são utilizadas apenas durante o processo de build. O arquivo gerado com as credenciais será acessível no código-fonte que pode ser inspecionado pelo navegador. Esta é uma limitação técnica de todas as aplicações frontend, não apenas do Netlify. Configure corretamente as regras de segurança do Firebase para proteger seus dados.
 
 Para adicionar suas credenciais do Firebase como variáveis de ambiente no Netlify:
 
@@ -141,6 +143,21 @@ Se você quiser usar um domínio personalizado em vez do subdomínio fornecido p
    - Você pode comprar um domínio diretamente pelo Netlify
    - Ou usar um domínio que você já possui, configurando os registros DNS
 
+## Segurança em aplicações frontend
+
+Para aplicações frontend com Firebase, é essencial entender:
+
+1. **Limitação técnica**: Qualquer arquivo JavaScript gerado durante o build será enviado ao navegador e poderá ser inspecionado pelo usuário final. Isso significa que as credenciais do Firebase estarão visíveis no código-fonte.
+
+2. **Firebase foi projetado assim**: O Firebase foi criado ciente desta limitação, e por isso a apiKey do Firebase não é uma chave secreta tradicional. Ela identifica seu projeto, mas não autoriza acesso sem autenticação adequada.
+
+3. **Melhores práticas para segurança**:
+   - Configure regras de segurança rigorosas no Firebase Database e Storage
+   - Implemente autenticação de usuários adequada
+   - Restrinja os domínios autorizados no console do Firebase
+   - Use o Firebase App Check para verificar a origem das solicitações
+   - Para operações realmente sensíveis, considere usar Netlify Functions como backend
+
 ## Solução de problemas comuns
 
 ### Problema: Falha no build
@@ -169,7 +186,9 @@ Razões possíveis:
 - [Documentação oficial do Netlify](https://docs.netlify.com/)
 - [Blog do Netlify sobre variáveis de ambiente](https://www.netlify.com/blog/2021/07/12/managing-environment-variables-for-jamstack-sites/)
 - [Configurações avançadas de deploy no Netlify](https://docs.netlify.com/configure-builds/file-based-configuration/)
+- [Regras de segurança do Firebase](https://firebase.google.com/docs/rules)
+- [Firebase App Check](https://firebase.google.com/docs/app-check)
 
 ---
 
-Com essa configuração, seu projeto de controle de estoque estará disponível online, com deploy automático a cada vez que você fizer push para o repositório GitHub, e com suas credenciais do Firebase protegidas como variáveis de ambiente. 
+Com essa configuração, seu projeto de controle de estoque estará disponível online, com deploy automático a cada vez que você fizer push para o repositório GitHub. Lembre-se de que a segurança principal deve vir das regras do Firebase, não da tentativa de ocultar as credenciais do frontend. 
