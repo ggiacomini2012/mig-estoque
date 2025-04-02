@@ -96,6 +96,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
+  // Expor a função saveToFirebase globalmente para que outros componentes possam usá-la
+  window.saveToFirebase = saveToFirebase;
+  
+  // Também expor a variável isLocalUpdate para controle de ciclo de atualização
+  window.setIsLocalUpdate = function(value) {
+    isLocalUpdate = value;
+  };
+  
+  window.getIsLocalUpdate = function() {
+    return isLocalUpdate;
+  };
+  
   // Escutar alterações em todas as células da tabela
   document.addEventListener('input', function(e) {
     console.log("Evento de input detectado:", e.target);
@@ -124,6 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Atualizar a célula se existir
     if (table.rows[rowIndex] && table.rows[rowIndex].cells[cellIndex]) {
       isLocalUpdate = true;
+      window.isLocalUpdate = true; // Para compatibilidade com outros componentes
       
       const cell = table.rows[rowIndex].cells[cellIndex];
       const oldValue = cell.innerHTML;
@@ -142,7 +155,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
       
-      isLocalUpdate = false;
+      setTimeout(() => {
+        isLocalUpdate = false;
+        window.isLocalUpdate = false; // Para compatibilidade com outros componentes
+      }, 100);
     }
   });
   

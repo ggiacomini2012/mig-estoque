@@ -39,6 +39,9 @@
     
     // Esperar um pouco para garantir que outros scripts carregaram
     setTimeout(initializeSyncEnforcer, 1000);
+    
+    // Monitorar mudanças em células da tabela e garantir que sejam salvas
+    monitorTableChanges();
   });
   
   // Inicializar o sincronizador
@@ -64,6 +67,89 @@
         console.warn('⚠️ Firebase Sync Enforcer: Desconectado, aguardando reconexão...');
         updateSyncStatus('offline');
       }
+    });
+  }
+  
+  // Monitorar mudanças em todas as células da tabela
+  function monitorTableChanges() {
+    const table = document.getElementById('estoque-table');
+    if (!table) {
+      console.error('❌ Firebase Sync Enforcer: Tabela estoque-table não encontrada');
+      return;
+    }
+    
+    // Monitorar mudanças via evento input (edição direta)
+    table.addEventListener('input', function(e) {
+      const cell = e.target.tagName === 'TD' ? e.target : e.target.closest('td');
+      if (cell) {
+        ensureSaveToFirebase(cell);
+      }
+    });
+    
+    // Monitorar mudanças de conteúdo via MutationObserver
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'childList' || mutation.type === 'characterData') {
+          const cell = mutation.target.tagName === 'TD' ? mutation.target : mutation.target.closest('td');
+          if (cell && !isEnforcingUpdate && !window.isLocalUpdate) {
+            ensureSaveToFirebase(cell);
+          }
+        }
+      });
+    });
+    
+    // Configurar o observer para monitorar todas as células
+    observer.observe(table, { 
+      childList: true, 
+      subtree: true, 
+      characterData: true, 
+      characterDataOldValue: true 
+    });
+    
+    console.log('✅ Firebase Sync Enforcer: Monitoramento de mudanças na tabela configurado');
+  }
+  
+  // Garantir que a função saveToFirebase seja chamada
+  function ensureSaveToFirebase(cell) {
+    console.log('🔄 Firebase Sync Enforcer: Detectada mudança em célula, garantindo salvamento...');
+    
+    // Verificar se a função global saveToFirebase existe (definida em realtime-sync.js)
+    if (typeof window.saveToFirebase === 'function') {
+      window.saveToFirebase(cell);
+    } else {
+      // Se a função original não existir, implementar diretamente aqui
+      saveToFirebaseDirectly(cell);
+    }
+  }
+  
+  // Implementação direta da função saveToFirebase caso a original não esteja disponível
+  function saveToFirebaseDirectly(cell) {
+    if (!cell) return;
+    
+    // Identificar a célula alterada
+    const table = cell.closest('table');
+    const row = cell.closest('tr');
+    if (!table || !row) return;
+    
+    const tableId = table.id || 'unknown';
+    const rowIndex = Array.from(row.parentElement.rows).indexOf(row);
+    const cellIndex = Array.from(row.cells).indexOf(cell);
+    
+    console.log(`🔄 Firebase Sync Enforcer: Salvando diretamente no Firebase: Tabela=${tableId}, Linha=${rowIndex}, Célula=${cellIndex}, Valor=${cell.innerHTML}`);
+    
+    // Criar caminho no banco de dados
+    const path = `${tableId}/${rowIndex}/${cellIndex}`;
+    
+    // Salvar no Firebase
+    estoqueRef.child(path).set({
+      value: cell.innerHTML,
+      updatedBy: 'sync-enforcer',
+      timestamp: firebase.database.ServerValue.TIMESTAMP
+    }).then(() => {
+      console.log(`✅ Firebase Sync Enforcer: Dados salvos com sucesso no Firebase: ${path}`);
+    }).catch(error => {
+      console.error(`❌ Firebase Sync Enforcer: Erro ao salvar no Firebase: ${error}`);
+      syncStatus.syncErrors++;
     });
   }
   
