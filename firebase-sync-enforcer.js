@@ -160,7 +160,15 @@
       const data = snapshot.val();
       
       console.log(`🔄 Firebase Sync Enforcer: Alteração detectada em ${path}`);
-      queueUpdate(path, data);
+      
+      // Verificar se o caminho está no formato correto
+      if (path.includes('/')) {
+        queueUpdate(path, data);
+      } else {
+        // Se o path não contém '/', pode ser um objeto com múltiplos caminhos
+        console.log('🔄 Firebase Sync Enforcer: Detectado formato alternativo de dados, processando...');
+        handleBulkData(path, data);
+      }
     });
     
     estoqueRef.on('child_added', function(snapshot) {
@@ -168,8 +176,74 @@
       const data = snapshot.val();
       
       console.log(`🔄 Firebase Sync Enforcer: Novo item adicionado em ${path}`);
-      queueUpdate(path, data);
+      
+      // Verificar se o caminho está no formato correto
+      if (path.includes('/')) {
+        queueUpdate(path, data);
+      } else {
+        // Se o path não contém '/', pode ser um objeto com múltiplos caminhos
+        console.log('🔄 Firebase Sync Enforcer: Detectado formato alternativo de dados, processando...');
+        handleBulkData(path, data);
+      }
     });
+  }
+  
+  // Função para lidar com dados em formato alternativo (objeto ou array)
+  function handleBulkData(tableId, data) {
+    console.log(`🔄 Firebase Sync Enforcer: Processando dados em massa para ${tableId}`, data);
+    
+    // Verificar se é um array ou objeto
+    if (Array.isArray(data)) {
+      // Caso seja um array, cada índice representa uma linha
+      data.forEach((row, rowIndex) => {
+        if (Array.isArray(row)) {
+          // Cada item do array de linha representa uma célula
+          row.forEach((cellValue, cellIndex) => {
+            // Criar um objeto compatível com o formato esperado
+            const cellData = {
+              value: cellValue,
+              updatedBy: 'system',
+              timestamp: Date.now()
+            };
+            
+            // Criar caminho completo
+            const fullPath = `${tableId}/${rowIndex}/${cellIndex}`;
+            queueUpdate(fullPath, cellData);
+          });
+        }
+      });
+    } else if (typeof data === 'object' && data !== null) {
+      // Caso seja um objeto, pode ter múltiplos formatos
+      // Iterar sobre todas as chaves
+      Object.keys(data).forEach(key => {
+        // Verificar se a chave é um caminho (contém /)
+        if (key.includes('/')) {
+          queueUpdate(key, data[key]);
+        } else {
+          // Se a chave pode ser um índice de linha
+          const rowIndex = parseInt(key);
+          if (!isNaN(rowIndex) && typeof data[key] === 'object') {
+            Object.keys(data[key]).forEach(cellKey => {
+              const cellIndex = parseInt(cellKey);
+              if (!isNaN(cellIndex)) {
+                const cellValue = data[key][cellKey];
+                // Criar formato compatível
+                const cellData = typeof cellValue === 'object' ? 
+                  cellValue : 
+                  {
+                    value: cellValue,
+                    updatedBy: 'system',
+                    timestamp: Date.now()
+                  };
+                
+                const fullPath = `${tableId}/${rowIndex}/${cellIndex}`;
+                queueUpdate(fullPath, cellData);
+              }
+            });
+          }
+        }
+      });
+    }
   }
   
   // Enfileirar uma atualização 
@@ -266,9 +340,34 @@
   // Aplicar um dado específico do Firebase à tabela
   function applyFirebaseDataToTable(path, data) {
     try {
-      if (!path || !data || !data.value) {
+      if (!path) {
+        console.warn(`⚠️ Firebase Sync Enforcer: Caminho inválido`);
+        return;
+      }
+      
+      if (!data) {
         console.warn(`⚠️ Firebase Sync Enforcer: Dados inválidos para ${path}`);
         return;
+      }
+      
+      // Lidar com diferentes formatos de dados
+      let value = data;
+      if (typeof data === 'object') {
+        // Se for um objeto no formato esperado {value, updatedBy, timestamp}
+        if (data.value !== undefined) {
+          value = data.value;
+        } else {
+          // Tentar encontrar o valor correto no objeto
+          console.warn(`⚠️ Firebase Sync Enforcer: Formato de dados inesperado para ${path}`, data);
+          // Tentar extrair qualquer string que possa ser o valor
+          const possibleValues = Object.values(data).filter(v => typeof v === 'string');
+          if (possibleValues.length > 0) {
+            value = possibleValues[0];
+            console.log(`🔄 Firebase Sync Enforcer: Usando valor mais provável: "${value}"`);
+          } else {
+            return; // Não foi possível encontrar um valor utilizável
+          }
+        }
       }
       
       // Parse do caminho (formato: tableId/row/cell)
@@ -282,6 +381,12 @@
       const rowIndex = parseInt(pathParts[1]);
       const cellIndex = parseInt(pathParts[2]);
       
+      // Verificar se rowIndex e cellIndex são números válidos
+      if (isNaN(rowIndex) || isNaN(cellIndex)) {
+        console.warn(`⚠️ Firebase Sync Enforcer: Índices inválidos em ${path}: row=${rowIndex}, cell=${cellIndex}`);
+        return;
+      }
+      
       // Encontrar a tabela correta
       const table = document.getElementById(tableId);
       if (!table) {
@@ -289,26 +394,35 @@
         return;
       }
       
-      // Obter a célula
-      if (!table.rows[rowIndex] || !table.rows[rowIndex].cells[cellIndex]) {
-        console.warn(`⚠️ Firebase Sync Enforcer: Célula não encontrada: ${rowIndex}/${cellIndex}`);
+      // Verificar se a linha existe
+      if (!table.rows || table.rows.length <= rowIndex) {
+        console.warn(`⚠️ Firebase Sync Enforcer: Linha ${rowIndex} não encontrada em ${tableId} (total: ${table.rows ? table.rows.length : 0})`);
+        return;
+      }
+      
+      // Verificar se a célula existe
+      if (!table.rows[rowIndex].cells || table.rows[rowIndex].cells.length <= cellIndex) {
+        console.warn(`⚠️ Firebase Sync Enforcer: Célula ${cellIndex} não encontrada na linha ${rowIndex} (total: ${table.rows[rowIndex].cells ? table.rows[rowIndex].cells.length : 0})`);
         return;
       }
       
       const cell = table.rows[rowIndex].cells[cellIndex];
       const currentValue = cell.innerHTML;
       
+      // Garantir que value seja uma string
+      const valueStr = String(value);
+      
       // Comparar valor atual com o valor do Firebase
-      if (currentValue !== data.value) {
+      if (currentValue !== valueStr) {
         console.log(`🔄 Firebase Sync Enforcer: Atualizando célula ${path}`);
         console.log(`   De: "${currentValue}"`);
-        console.log(`   Para: "${data.value}"`);
+        console.log(`   Para: "${valueStr}"`);
         
         // Flag para evitar loop de atualizações (importante!)
         window.isLocalUpdate = true;
         
         // Atualizar o valor da célula
-        cell.innerHTML = data.value;
+        cell.innerHTML = valueStr;
         
         // Adicionar efeito visual para destacar a célula atualizada
         highlightUpdatedCell(cell);
@@ -320,6 +434,7 @@
       }
     } catch (error) {
       console.error(`❌ Firebase Sync Enforcer: Erro ao aplicar dados para ${path}`, error);
+      console.error('Detalhes do erro:', {path, data, error: error.message});
       throw error;
     }
   }
