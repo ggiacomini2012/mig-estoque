@@ -1,0 +1,4 @@
+utilize o convencional commits
+faça o add commit e push de cada arquivo separadamente
+
+utilize o git para pushar as mudanças atuais
