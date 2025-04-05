@@ -1,0 +1,10 @@
+historico de comandos com botao em cada de copia que adiciona automatico no input subtituindo o atual
+deve ser leve
+o texto deve ser filtrado para tirar virgulas e espacos duplos
+o casulo deve ser selacionado ou escrito
+forma de exportar e importar os dados salvos
+
+
+
+
+
