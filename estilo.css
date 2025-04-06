@@ -305,14 +305,14 @@ td[contenteditable="true"]:focus {
 }
 
 /* Subtle animations */
-@keyframes fadeIn {
+/* @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
-}
+} */
 
-table {
+/* table {
   animation: fadeIn 0.4s ease-out;
-}
+} */
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -371,10 +371,10 @@ table {
   animation: highlight 2s ease-in-out;
 }
 
-@keyframes highlight {
+/* @keyframes highlight {
   0% { background-color: #ffff99; }
   100% { background-color: transparent; }
-}
+} */
 
 /* Estilos para usuários editando simultaneamente */
 .cell-being-edited {
