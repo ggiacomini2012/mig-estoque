@@ -1,0 +1,11 @@
+Crie um novo arquivo JavaScript chamado cloud-sync.js
+
+Adicione funcionalidades para sincronização com Firebase:
+- Botão para salvar dados na nuvem (enviar JSON da tabela e histórico para Firebase)
+- Botão para sincronizar dados da nuvem (baixar e atualizar tabela com dados salvos no Firebase)
+- Garanta integração com sistema existente
+- Mantenha todas as funcionalidades já implementadas
+
+Adicione o script ao index.html com carregamento diferido
+
+Implemente de forma minimalista e eficiente, aproveitando as funções existentes de Firebase já presentes no código 
