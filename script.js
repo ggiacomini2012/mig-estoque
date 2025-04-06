@@ -1,20 +1,17 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('tableRendered', function() {
   // Add ID to main table
-  const mainTable = document.querySelector('table');
-  mainTable.id = 'estoque-table';
+  const mainTable = document.getElementById('estoque-table');
   
   // Add IDs to all andar rows
   const andarRows = mainTable.querySelectorAll('tbody > tr');
   andarRows.forEach((row, index) => {
     const andar = row.cells[0].textContent.trim();
     const tamanho = row.cells[1].textContent.trim();
-    row.id = `andar-${andar}-${tamanho}`;
     
     // Add IDs to all subtables
     const subtables = row.querySelectorAll('.subtable');
     subtables.forEach((subtable, colIndex) => {
       const colLetter = String.fromCharCode(65 + colIndex); // A, B, C, D
-      subtable.id = `subtable-${andar}-${colLetter}`;
       
       // Add IDs to all slots in subtables
       // const slots = subtable.querySelectorAll('tr');
