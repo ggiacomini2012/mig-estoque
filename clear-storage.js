@@ -25,11 +25,32 @@ document.addEventListener('DOMContentLoaded', function() {
       // Limpar todo o localStorage
       localStorage.clear();
       
-      // Informar que os dados foram limpos
-      alert('Todos os dados foram limpos com sucesso!');
+      // Limpar todas as subtabelas - Deixar o site como era antes
+      const subtables = document.querySelectorAll('.subtable');
+      subtables.forEach(table => {
+        // Manter apenas a primeira linha (cabeçalho) e remover o resto
+        while (table.rows.length > 1) {
+          table.deleteRow(1);
+        }
+      });
       
-      // Recarregar a página para refletir as mudanças
-      location.reload();
+      // Remover quaisquer elementos adicionados dinamicamente ao DOM
+      // como campos de entrada, botões adicionais, etc.
+      const inputElements = document.querySelectorAll('input:not([id^="original"])');
+      inputElements.forEach(el => el.remove());
+      
+      // Se houver um campo de entrada de comandos, limpar seu valor
+      const commandInput = document.getElementById('comando-input');
+      if (commandInput) {
+        commandInput.value = '';
+      }
+      
+      // Limpar qualquer preview ou display de dados
+      const previewElements = document.querySelectorAll('.preview-item, .preview-container');
+      previewElements.forEach(el => el.remove());
+      
+      // Informar que os dados foram limpos
+      alert('Todos os dados foram limpos com sucesso! O site foi restaurado ao estado inicial.');
     } else if (senha !== null) {
       // Senha incorreta
       alert('Senha incorreta. Operação cancelada.');
