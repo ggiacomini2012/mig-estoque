@@ -17,18 +17,18 @@ document.addEventListener('DOMContentLoaded', function() {
       subtable.id = `subtable-${andar}-${colLetter}`;
       
       // Add IDs to all slots in subtables
-      const slots = subtable.querySelectorAll('tr');
-      slots.forEach(slot => {
-        const slotCells = slot.querySelectorAll('td');
-        const slotNumber = slotCells[0].textContent.trim();
-        const slotId = slotCells[1].textContent.trim();
-        const slotSize = slotCells[2].textContent.trim();
+      // const slots = subtable.querySelectorAll('tr');
+      // slots.forEach(slot => {
+      //   const slotCells = slot.querySelectorAll('td');
+      //   const slotNumber = slotCells[0].textContent.trim();
+      //   const slotId = slotCells[1].textContent.trim();
+      //   const slotSize = slotCells[2].textContent.trim();
         
-        slot.id = `slot-${slotId}`;
-        slotCells[0].id = `slot-${slotId}-number`;
-        slotCells[1].id = `slot-${slotId}-code`;
-        slotCells[2].id = `slot-${slotId}-size`;
-      });
+      //   slot.id = `slot-${slotId}`;
+      //   slotCells[0].id = `slot-${slotId}-number`;
+      //   slotCells[1].id = `slot-${slotId}-code`;
+      //   slotCells[2].id = `slot-${slotId}-size`;
+      // });
     });
   });
   
