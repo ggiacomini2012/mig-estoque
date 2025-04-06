@@ -9,6 +9,6 @@ o nome do arquivo deve descrever o que ele propoe de atualizacao ou criacao
 
 o conteudo do arquivo mudanças-atuais-js.txt sera copiado apenas a parte *editar deve ser apagada e spbre o conteudo que irei mencionar aseguir:
 
-vamos observar o formato html, apagarr as tags que sao renderizadas direto no index e vamos fazer essa renderizacao via js
+adiciome dois botoes um de salvar na nuvewm e outro de sincronizar com a nuvem que irão enviar o json contentod a tabela e historico de comandos para o firebase e tambem baixar e atualizar a a tabela com os dados salvos na nuvem
 
 crie um promp melhorado do que mensionei, minimalista e consiso
