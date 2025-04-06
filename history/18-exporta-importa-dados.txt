@@ -1,0 +1,47 @@
+crie um arquivo js
+
+nao altere outros codigos
+o arquivo js deve ser adicionado ao index.html
+
+nao use css 
+
+nao mexa com o git
+
+-----------------
+
+preciso de um botao que exporta json e otro que importa json
+ao exportar exporta um json que conte 
+exemplo:
+{
+    tabela: [ 
+        {
+        linha: 10,
+        coluna a,
+        itens: {
+            [qtd: 1, cod: 203, cor: preta],
+            [qtd: 2, cod: 203, cor: branca]
+            },
+        } 
+        {
+        linha: 10,
+        coluna a,
+        itens: {
+            [qtd: 1, cod: 203, cor: preta],
+            [qtd: 2, cod: 203, cor: branca]
+            }
+        }
+    ],
+    {
+        historicoDeComandos: {
+            "a10 preto 230 branco 204",
+            "a2 preto 230 branco 204"
+        }
+    }
+}
+
+
+
+
+-----------------
+
+o codigo deve ser minimalista e consiso
