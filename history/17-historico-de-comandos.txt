@@ -1,0 +1,25 @@
+crie um arquivo js
+
+nao altere outros codigos
+o arquivo js deve ser adicionado ao index.html
+
+nao use css 
+
+nao mexa com o git
+
+-----------------
+
+o arquivo js deve salvar os comandos que foram aplicados
+exemplo a10 branco 230 preto 240 branco 230
+e deve no final da pagina como footer mostrar uma lista com os ultimos 50 comandos salvos
+eles devem ser salvos no localstorage
+e ao lado de cada comando salvo deve haver i, botao com um icone de copia e cola que se clicado cola o comando no input de adicionar produto
+
+
+
+
+
+
+-----------------
+
+o codigo deve ser minimalista e consiso
