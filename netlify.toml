@@ -1,0 +1,12 @@
+[build]
+  # Diretório a ser publicado (a raiz do projeto)
+  publish = "."
+  
+  # Comando para gerar o arquivo de configuração do Firebase durante o build
+  command = "node generate-config.js"
+
+# Configuração para SPAs, redirecionando todas as rotas para index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200 
