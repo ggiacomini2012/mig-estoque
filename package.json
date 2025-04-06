@@ -1,0 +1,12 @@
+{
+  "name": "mig-estoque",
+  "version": "1.0.0",
+  "description": "Sistema de controle de estoque",
+  "main": "index.html",
+  "scripts": {
+    "generate-config": "node generate-config.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  }
+} 
