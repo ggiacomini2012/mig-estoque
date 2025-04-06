@@ -14,275 +14,269 @@
   <!-- <script src="firebase-monitor.js"></script> -->
 </head>
 <body>
-  <!-- Container para o input com espaço reservado -->
-  <div id="input-container" style="height: 60px; display: flex; align-items: center;"></div>
-  
   <h1>tabela de estoque</h1>
   
-  <!-- Container para a tabela principal com espaço reservado -->
-  <div id="table-container" style="min-height: 800px; width: 100%;">
-    <table id="estoque-table" border="1">
-      <thead>
-        <tr>
-          <th>ANDAR</th>
-          <th>TAMANHO</th>
-          <th>A</th>
-          <th>B</th>
-          <th>C</th>
-          <th>D</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Andares 10 e 9 (Tamanho GG) -->
-        <tr>
-          <td>10</td>
-          <td>GG</td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td>9</td>
-          <td>GG</td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-        </tr>
-        
-        <!-- Andares 8, 7, 6 (Tamanho G) -->
-        <tr>
-          <td>8</td>
-          <td>G</td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td>G</td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>G</td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-        </tr>
-        
-        <!-- Andares 5, 4, 3 (Tamanho M) -->
-        <tr>
-          <td>5</td>
-          <td>M</td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>M</td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>M</td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-        </tr>
-        
-        <!-- Andares 2, 1 (Tamanho P, mas 2D e 1D são XGG e EXG) -->
-        <tr>
-          <td>2</td>
-          <td>P</td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td><td>XGG/EXG</td></tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>P</td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
-            </table>
-          </td>
-          <td>
-            <table class="subtable" border="1">
-              <tr><td>Qtd.</td><td>COD.</td><td>COR</td><td>XGG/EXG</td></tr>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table id="estoque-table" border="1">
+    <thead>
+      <tr>
+        <th>ANDAR</th>
+        <th>TAMANHO</th>
+        <th>A</th>
+        <th>B</th>
+        <th>C</th>
+        <th>D</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Andares 10 e 9 (Tamanho GG) -->
+      <tr>
+        <td>10</td>
+        <td>GG</td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>GG</td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+      </tr>
+      
+      <!-- Andares 8, 7, 6 (Tamanho G) -->
+      <tr>
+        <td>8</td>
+        <td>G</td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>G</td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>G</td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+      </tr>
+      
+      <!-- Andares 5, 4, 3 (Tamanho M) -->
+      <tr>
+        <td>5</td>
+        <td>M</td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>M</td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>M</td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+      </tr>
+      
+      <!-- Andares 2, 1 (Tamanho P, mas 2D e 1D são XGG e EXG) -->
+      <tr>
+        <td>2</td>
+        <td>P</td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td><td>XGG/EXG</td></tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>P</td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td></tr>
+          </table>
+        </td>
+        <td>
+          <table class="subtable" border="1">
+            <tr><td>Qtd.</td><td>COD.</td><td>COR</td><td>XGG/EXG</td></tr>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   
   <!-- Scripts existentes -->
   <script src="script.js"></script>
