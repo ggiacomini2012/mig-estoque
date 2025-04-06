@@ -218,6 +218,11 @@ function importTableFromCloud(jsonData) {
               qtdCell.textContent = produto.qtd;
               codCell.textContent = produto.cod;
               corCell.textContent = produto.cor;
+              
+              // Adicionar atributo contenteditable="true" para cada célula
+              qtdCell.setAttribute('contenteditable', 'true');
+              codCell.setAttribute('contenteditable', 'true');
+              corCell.setAttribute('contenteditable', 'true');
             });
           }
         }
