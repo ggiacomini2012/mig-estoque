@@ -1,10 +1,10 @@
-escreva um arquivo js novo
+escreva um arquivo css novo
 nao alterte nenhum antigo
 mantanha todas as features ja criadas
 
 ---------------------
 
-
+*editar
 
 
 ---------------------
