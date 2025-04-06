@@ -1,0 +1,27 @@
+crie um arquivo js
+
+nao altere outros codigos
+o arquivo js deve ser adicionado ao index.html
+
+nao use css 
+
+nao mexa com o git
+
+-----------------
+
+o arquivo js deve observar o que esta sendo escrito no input e se não respeitar os criterios deve fazer sumir o botao aplicar 
+com display = none 
+
+o criterio é que a primeira parte deve ser umaletra seguida de um numero de 1 a 10 exemplo a1 b2 a10 nao pode ser c11 deve ser de 1 a 10
+seguido por um espaço e uma palavra e um codigo de 3 numeros
+exemplo a10 branco 230 preto 240 branco 230
+
+o arquivo deve ter logs de quando encontra um erro
+
+
+
+
+
+-----------------
+
+o codigo deve ser minimalista e consiso
