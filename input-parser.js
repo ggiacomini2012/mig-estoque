@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Configurar elementos
   input.type = 'text';
-  input.placeholder = 'A10 203 preta 204 206 208 branco 204';
+  input.placeholder = 'A10 preta 204 preto 206 branco 208 florir 204';
   input.style.width = '400px';
   button.textContent = 'Aplicar';
   

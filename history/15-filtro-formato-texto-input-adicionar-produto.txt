@@ -1,0 +1,26 @@
+escreva um arquivo js novo
+nao alterte nenhum antigo
+mantanha todas as features ja criadas
+
+crie um filtro para o 
+<input type="text" placeholder="A10 preta 204 preto 206 branco 208 florir 204" style="width: 400px;" data-label-id="0" data-metatip="true">
+este filtro observa que a primeira palavra deve ser uma letra junta com um numero que pode ser de 2 digitos, exemplo a10 ou h8.
+depois o filtro observara que deve sempre ter um espaço seguido de uma palavra e loggo mais 3 numero
+
+se o texto estiver o formato errado deve desabilidar o:
+<button data-label-id="0">Aplicar</button>
+
+adicione o arquivo no index html
+
+nao use o git
+
+adicione um consolelog quando a uma filtragem observar erro e indica os erros e faça o botao desaparecer o botao deve reaparecer sempr eque o texto estiver no formato certo
+
+para mostrat o botao o texto deve ser no minimo composto por 3 partes:
+a10 preta 222
+primeira parte indica a tabela
+a outra indica a cer
+a outra indica o codigo
+ou seja deve haver pelo menos um item
+
+escreva de forma extremamente minimalista e consisa

@@ -1,0 +1,7 @@
+crie commits
+verifique todas as mudanças
+
+faça o add commit e push de cada arquivo separadamente utilizando o formato convencional commits
+
+utilize o git para pushar as mudanças atuais
+tudo em portugues
