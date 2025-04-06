@@ -1,0 +1,18 @@
+escreva um arquivo js novo
+nao alterte nenhum antigo
+mantanha todas as features ja criadas
+
+---------------------
+
+Converter a estrutura atual da tabela HTML para renderização dinâmica via JavaScript:
+
+1. Remover as tags de tabela estáticas do index.html
+2. Criar um elemento container no lugar
+3. Desenvolver função JavaScript para gerar a tabela dinamicamente
+4. Manter mesma estrutura e funcionalidades existentes
+5. Separar lógica de dados da apresentação
+
+---------------------
+
+nao mexa com o git
+escreva de forma extremamente minimalista e consisa 
