@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Usar o container existente em vez de criar um novo
-  const container = document.getElementById('input-container');
-  
-  // Criar apenas os elementos de input e botão
+  // Criar elementos de UI
+  const container = document.createElement('div');
   const input = document.createElement('input');
   const button = document.createElement('button');
   
@@ -12,9 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
   input.style.width = '400px';
   button.textContent = 'Aplicar';
   
-  // Adicionar ao container existente
+  // Adicionar ao DOM
   container.appendChild(input);
   container.appendChild(button);
+  document.body.insertBefore(container, document.body.firstChild);
   
   // Adicionar handler de evento
   button.onclick = function() {
