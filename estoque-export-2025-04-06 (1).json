@@ -1,0 +1,84 @@
+{
+  "tabela": [
+    {
+      "linha": 10,
+      "coluna": "A",
+      "itens": [
+        {
+          "qtd": 0,
+          "cod": "",
+          "cor": ""
+        }
+      ]
+    },
+    {
+      "linha": 9,
+      "coluna": "B",
+      "itens": [
+        {
+          "qtd": 0,
+          "cod": "",
+          "cor": ""
+        }
+      ]
+    },
+    {
+      "linha": 8,
+      "coluna": "C",
+      "itens": [
+        {
+          "qtd": 0,
+          "cod": "",
+          "cor": ""
+        }
+      ]
+    },
+    {
+      "linha": 7,
+      "coluna": "D",
+      "itens": [
+        {
+          "qtd": 0,
+          "cod": "",
+          "cor": ""
+        }
+      ]
+    },
+    {
+      "linha": 6,
+      "coluna": "B",
+      "itens": [
+        {
+          "qtd": 0,
+          "cod": "",
+          "cor": ""
+        }
+      ]
+    },
+    {
+      "linha": 6,
+      "coluna": "C",
+      "itens": [
+        {
+          "qtd": 0,
+          "cod": "",
+          "cor": ""
+        }
+      ]
+    },
+    {
+      "linha": 2,
+      "coluna": "A",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    }
+  ],
+  "historicoDeComandos": [
+    "a2 preto 333"
+  ]
+}
