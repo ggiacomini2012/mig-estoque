@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-  makeAllCellsEditable();
+  // Wait for table to be rendered
+  document.addEventListener('tableRendered', function() {
+    makeAllCellsEditable();
+  });
   
   // Adicionar listener para quando a tabela for restaurada
   document.addEventListener('tableRestored', function() {
