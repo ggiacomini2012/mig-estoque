@@ -1,7 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Add ID to main table
-  const mainTable = document.querySelector('table');
-  mainTable.id = 'estoque-table';
+  // A tabela já tem ID definido no HTML
+  // const mainTable = document.querySelector('table');
+  // mainTable.id = 'estoque-table';
+  
+  // Pré-dimensionar a tabela para evitar layout shifts
+  const mainTable = document.getElementById('estoque-table');
+  if (mainTable) {
+    // Garantir que as dimensões da tabela sejam calculadas antecipadamente
+    mainTable.style.tableLayout = 'fixed';
+    mainTable.style.width = '100%';
+  }
   
   // Add IDs to all andar rows
   const andarRows = mainTable.querySelectorAll('tbody > tr');
@@ -15,6 +23,10 @@ document.addEventListener('DOMContentLoaded', function() {
     subtables.forEach((subtable, colIndex) => {
       const colLetter = String.fromCharCode(65 + colIndex); // A, B, C, D
       subtable.id = `subtable-${andar}-${colLetter}`;
+      
+      // Garantir que as dimensões das subtabelas sejam fixas
+      subtable.style.tableLayout = 'fixed';
+      subtable.style.width = '100%';
       
       // Add IDs to all slots in subtables
       // const slots = subtable.querySelectorAll('tr');
