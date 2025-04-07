@@ -1,0 +1,23 @@
+crie um arquivo JSON no diretorio convencao-do-projeto
+o nome deve ser numero seguido de descricao
+
+exemplo:
+
+0-analise-do-input-parser.txt
+
+o numero deve ser sempre crescente
+
+ou seja se temos
+
+9-descricao.txt
+
+não altere o codigo
+não mexa com o git
+
+o proximo será 10-descricao.txt
+
+o arquivo deve ser uma ajuda para que outra ai pode usar para entender todo o projeto
+
+o conteudo do arquivo é uma convensao super detalhado e objetivo e minimalista sobre:
+
+nomenando todos os arquivos funcpoes tag e como elas se relacionam

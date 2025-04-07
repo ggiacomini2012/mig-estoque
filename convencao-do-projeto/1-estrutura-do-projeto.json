@@ -1,0 +1,74 @@
+{
+  "project_structure": {
+    "core_files": {
+      "index.html": "Main entry point of the application",
+      "estilo.css": "Global styles and UI components",
+      "script.js": "Main application initialization and setup"
+    },
+    "input_processing": {
+      "input-parser.js": "Core parser for processing input data",
+      "input-validator.js": "Validates input data before processing",
+      "input-filter.js": "Filters and sanitizes input data",
+      "input-preview.js": "Shows preview of input before processing"
+    },
+    "data_management": {
+      "auto-save.js": "Handles automatic saving of changes",
+      "cloud-sync.js": "Manages cloud synchronization",
+      "export-import.js": "Handles data export and import operations",
+      "table-editor.js": "Manages table editing operations",
+      "row-remover.js": "Handles row removal functionality"
+    },
+    "firebase_integration": {
+      "firebase-config.example.js": "Example Firebase configuration",
+      "firebase-debug.js": "Firebase debugging utilities",
+      "firebase-debug-loader.js": "Loads Firebase debug tools",
+      "firebase-monitor.js": "Monitors Firebase operations",
+      "firebase-sync-enforcer.js": "Enforces Firebase synchronization",
+      "firebase-viewer.html": "Firebase data viewer interface"
+    },
+    "ui_components": {
+      "ui-enhancer.js": "Enhances UI functionality",
+      "render-table.js": "Handles table rendering",
+      "buscador.js": "Search functionality",
+      "editable.js": "Makes elements editable",
+      "macro-cell-class.js": "Defines macro cell styling"
+    },
+    "realtime_features": {
+      "presence-tracker.js": "Tracks user presence",
+      "realtime-sync.js": "Handles real-time synchronization"
+    },
+    "utility": {
+      "command-history.js": "Manages command history",
+      "fix-duplicate-buttons.js": "Fixes duplicate button issues",
+      "clear-data.js": "Handles data clearing operations"
+    },
+    "configuration": {
+      "package.json": "Project dependencies and scripts",
+      "netlify.toml": "Netlify deployment configuration",
+      "env-setup-github.example.sh": "GitHub environment setup example",
+      "env-setup-netlify.example.sh": "Netlify environment setup example"
+    },
+    "documentation": {
+      "README.md": "Project overview and setup instructions",
+      "FIREBASE_SETUP.md": "Firebase setup guide",
+      "CORRIGINDO_ERROS_DEPLOY.md": "Deployment error fixes",
+      "CONFIGURANDO_NETLIFY.md": "Netlify configuration guide",
+      "CONFIGURANDO_ENV_NO_GITHUB.md": "GitHub environment setup guide"
+    }
+  },
+  "file_naming_conventions": {
+    "javascript_files": "Use kebab-case for file names (e.g., input-parser.js)",
+    "html_files": "Use kebab-case for file names (e.g., firebase-viewer.html)",
+    "css_files": "Use kebab-case for file names (e.g., estilo.css)",
+    "markdown_files": "Use UPPERCASE with underscores (e.g., FIREBASE_SETUP.md)",
+    "configuration_files": "Use standard names (e.g., package.json, netlify.toml)"
+  },
+  "directory_structure": {
+    "convencao-do-projeto": "Contains project convention and documentation files",
+    "code-review": "Contains code review related files",
+    "history": "Contains historical project files",
+    "future": "Contains planned future features",
+    "current-changes": "Contains current development changes",
+    "update-git": "Contains git update related files"
+  }
+} 
