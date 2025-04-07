@@ -1,0 +1,24 @@
+crie um arquivo txt no diretorio code-review
+
+o nome deve ser numero seguido de descricao
+
+exemplo:
+
+0-analise-do-input-parser.txt
+
+o numero deve ser sempre crescente
+
+ou seja se temos
+
+9-descricao.txt
+
+não altere o codigo
+não mexa com o git
+
+o proximo será 10-descricao.txt
+
+o conteudo do arquivo é um ccode review super detalhado e objetivo e minimalista sobre:
+
+tópico:
+
+analize todos os arquivos que criam ou salvam a tabela e me ajude a fazer com que a tabela va do a ao z
