@@ -4,9 +4,25 @@
   "description": "Sistema de controle de estoque",
   "main": "index.html",
   "scripts": {
-    "generate-config": "node generate-config.js"
+    "generate-config": "node generate-config.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "collectCoverageFrom": [
+      "*.js",
+      "!node_modules/**",
+      "!coverage/**",
+      "!jest.config.js"
+    ]
   }
 } 
