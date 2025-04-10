@@ -71,7 +71,7 @@ h1::after {
 }
 
 /* Refined input section */
-div:first-of-type {
+#input-parser-container {
   display: flex;
   justify-content: space-around;
   align-items: center;
