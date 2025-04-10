@@ -79,9 +79,20 @@ function renderEstoqueTable() {
         headers.push(row.especial.label);
       }
       
-      headers.forEach(header => {
+      headers.forEach((header, index) => {
         const subtableTh = document.createElement('td');
         subtableTh.textContent = header;
+        subtableTh.classList.add('sortable-header');
+        subtableTh.dataset.colIndex = index;
+
+        if (header === 'Qtd.') {
+          subtableTh.dataset.sortType = 'numeric';
+        } else {
+          subtableTh.dataset.sortType = 'text';
+        }
+
+        subtableTh.style.cursor = 'pointer';
+
         subtableRow.appendChild(subtableTh);
       });
       
