@@ -1,0 +1,41 @@
+/* cloud-sync-buttons.css */
+
+/* Container for the buttons */
+.cloud-sync-buttons { /* Changed from # to . */
+  margin-top: 15px; /* Add some space above the buttons */
+  display: flex; /* Added from original JS styles */
+  gap: 10px; /* Added from original JS styles */
+  /* Add other container styles if needed, like justify-content: center; */
+}
+
+/* Styling for buttons within the container */
+.cloud-sync-buttons button { /* Changed from # to . */
+  background-color: #333; /* Dark background */
+  color: #eee; /* Light text */
+  border: 1px solid #555; /* Subtle border */
+  padding: 6px 12px; /* Button padding */
+  /* margin: 0 5px; */ /* Replaced by gap */
+  border-radius: 3px; /* Rounded corners */
+  font-family: 'Consolas', 'Courier New', monospace; /* Match font */
+  font-size: 0.9em; /* Match font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease; /* Added opacity transition */
+}
+
+/* Hover state for buttons */
+.cloud-sync-buttons button:hover:not(.disabled) { /* Changed from # to . , ensure disabled doesn't change on hover */
+  background-color: #444; /* Slightly lighter on hover */
+  border-color: #777;
+}
+
+/* Active state (when clicked) */
+.cloud-sync-buttons button:active:not(.disabled) { /* Changed from # to . , ensure disabled doesn't change on active */
+  background-color: #222; /* Darker when clicked */
+  border-color: #444;
+}
+
+/* --- Added Disabled State --- */
+.cloud-sync-buttons button.disabled {
+  opacity: 0.5; 
+  cursor: not-allowed;
+} 
