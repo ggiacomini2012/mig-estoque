@@ -216,7 +216,8 @@ table > tbody > tr:hover {
 
 /* First column cells with embossed effect */
 table > tbody > tr > td:first-child,
-table > tbody > tr > td:nth-child(2) {
+table > tbody > tr > td:nth-child(2),
+table > tbody > tr > td:nth-child(7) {
   font-weight: 600;
   text-align: center;
   background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
@@ -540,3 +541,8 @@ td[contenteditable="true"]:hover {
 .input-preview-header-qty, .input-preview-data-qty { width: 40px; }
 .input-preview-header-code, .input-preview-data-code { width: 60px; }
 .input-preview-header-color, .input-preview-data-color { width: 80px; }
+
+/* Container for the main table */
+#table-container {
+  overflow: auto;
+}
