@@ -1,0 +1,56 @@
+# TODO: Extend Table Columns to A-Z
+
+- [ ] **Centralize Columns:** Define columns A-Z in one place.
+  - [ ] Decide on the exact location and format.
+    - [ ] Evaluate putting it in `render-table.js` vs. a separate `config.js`.
+    - [ ] Choose between a simple array `['A', ..., 'Z']` or an array of objects for potential future metadata.
+    - [ ] Finalize decision: Constant array in `render-table.js` seems simplest for now.
+  - [ ] Implement the column definition.
+    - [ ] Add `const COLUMNS = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));` to `render-table.js`.
+  - [ ] Ensure this definition is accessible where needed.
+    - [ ] Check if it needs to be exported or passed to other modules/functions.
+- [ ] **Dynamic Rendering (`render-table.js`):** Update rendering based on the central definition.
+  - [ ] Modify table header generation loop.
+    - [ ] Find the `<thead>` creation logic.
+    - [ ] Replace the hardcoded header loop/creation with `COLUMNS.forEach(...)`.
+  - [ ] Modify table body row/cell generation loop.
+    - [ ] Find the `<tbody>` row/cell creation logic.
+    - [ ] Replace hardcoded cell loops with `COLUMNS.forEach(...)` or similar, ensuring correct `cellIndex`.
+- [ ] **Dynamic Data Handling:** Refactor data scripts for dynamic column iteration.
+  - [ ] Refactor `auto-save.js` (LocalStorage).
+    - [ ] Identify loops saving/loading cell data (likely using fixed indices like `colIndex <= 5`).
+    - [ ] Update loops to iterate based on `COLUMNS.length` or `COLUMNS.forEach`.
+    - [ ] Verify `getCellId` or similar functions adapt correctly.
+  - [ ] Refactor `export-import.js` (JSON).
+    - [ ] Identify loops extracting/populating cell data for JSON.
+    - [ ] Update loops to use `COLUMNS.length` or `COLUMNS.forEach`.
+  - [ ] Refactor `cloud-sync.js` (Firebase).
+    - [ ] Identify loops saving/loading cell data to/from Firebase.
+    - [ ] Update loops to use `COLUMNS.length` or `COLUMNS.forEach`.
+    - [ ] Review Firebase path generation/parsing logic for column dependencies.
+  - [ ] Replace all hardcoded column index/letter conversions.
+    - [ ] Search codebase for `charCodeAt`, `fromCharCode` used with column letters.
+    - [ ] Search for fixed loop limits (e.g., `i < 4`, `j <= 5`) related to columns.
+    - [ ] Replace with logic based on `COLUMNS` array index or value.
+- [ ] **Verify Storage:** Test storage mechanisms with extended columns.
+  - [ ] Test LocalStorage saving/loading.
+    - [ ] Create a table with data in columns beyond 'D'.
+    - [ ] Reload the page and verify data persistence.
+  - [ ] Test JSON export/import.
+    - [ ] Export data from a table with >4 columns.
+    - [ ] Import the data into a new/empty table and verify correctness.
+  - [ ] Test Firebase saving/loading.
+    - [ ] Save a table with >4 columns to Firebase.
+    - [ ] Load the table from Firebase and verify data.
+- [ ] **Review Helpers:** Check helper scripts for hardcoded column logic.
+  - [ ] Review `table-editor.js`.
+    - [ ] Check functions adding row controls or interacting with cells for column assumptions.
+  - [ ] Review `script.js` (ID generation).
+    - [ ] Verify `getCellId`, `getRowId` etc., don't rely on fixed column count.
+  - [ ] Review `editable.js`.
+    - [ ] Check event listeners or functions handling cell edits for column assumptions.
+- [ ] **Check CSS (`estilo.css`):** Review styles for column-specific rules.
+  - [ ] Search for `td:nth-child(...)`.
+    - [ ] Analyze selectors like `td:nth-child(6)` (old column 'D') and determine if they need removal or modification.
+  - [ ] Look for fixed width/layout rules.
+    - [ ] Check table layout properties (`table-layout`, column widths) that might assume 4 columns. 
