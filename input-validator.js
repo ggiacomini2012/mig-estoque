@@ -20,96 +20,113 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Função de validação
     function validateInput() {
-      const text = input.value.trim();
-      let isValid = true;
-      let errors = [];
-      
-      if (!text) {
+      const fullInputText = input.value.trim();
+      let overallIsValid = true;
+      let allErrors = [];
+
+      if (!fullInputText) {
         button.style.display = 'none';
         return;
       }
+
+      // Dividir a entrada completa em comandos individuais pela vírgula
+      const commands = fullInputText.split(',').map(cmd => cmd.trim()).filter(cmd => cmd);
       
-      const parts = text.split(' ').filter(p => p.trim());
-      console.log(`[Validador] Validando entrada: "${text}" (${parts.length} partes)`);
-      
-      // Verificar se tem pelo menos 3 partes (localização, cor, código)
-      if (parts.length < 3) {
-        isValid = false;
-        errors.push('O input deve ter no mínimo 3 partes: localização (ex: A1), cor e código');
-        button.style.display = 'none';
-        console.error('[Validador] ERRO: Formato incompleto. Esperado pelo menos 3 partes.');
-        console.log('[Validador] SOLUÇÃO: Use o formato "A1 preto 203" (localização + cor + código)');
-        return;
+      if (commands.length === 0 && fullInputText.length > 0) {
+        // Input has content but it's only commas/whitespace
+        overallIsValid = false;
+        allErrors.push("Entrada inválida. Use vírgulas para separar comandos completos (ex: A1 cor 123, B2 cor 456)");
       }
-      
-      // Verificar se o primeiro item tem o formato correto (ex: A10, B5)
-      if (!locationPattern.test(parts[0])) {
-        isValid = false;
-        const msg = `Formato de localização inválido: "${parts[0]}". Deve ser uma letra seguida de 1-2 dígitos (ex: A1, B10)`;
-        errors.push(msg);
-        console.error(`[Validador] ERRO: ${msg}`);
-        console.log('[Validador] SOLUÇÃO: Corrija o formato da localização (ex: A1, B10, C5)');
-      }
-      
-      // Verificar se tem uma cor válida
-      if (!/^[A-Za-z]+$/.test(parts[1])) {
-        isValid = false;
-        const msg = `A cor "${parts[1]}" deve conter apenas letras (ex: preto, vermelho)`;
-        errors.push(msg);
-        console.error(`[Validador] ERRO: ${msg}`);
-        console.log('[Validador] SOLUÇÃO: Utilize apenas letras para a cor');
-      }
-      
-      // Verificar se tem um código válido (exatamente 3 dígitos)
-      if (!/^\d{3}$/.test(parts[2])) {
-        isValid = false;
-        const msg = `O código "${parts[2]}" deve ter exatamente 3 dígitos (ex: 203, 045, 001)`;
-        errors.push(msg);
-        console.error(`[Validador] ERRO: ${msg}`);
-        console.log('[Validador] SOLUÇÃO: Use exatamente 3 dígitos para o código (000-999)');
-      }
-      
-      // Verificar as partes adicionais após as 3 obrigatórias
-      let expectingColor = true;
-      
-      for (let i = 3; i < parts.length; i++) {
-        const part = parts[i];
-        
-        if (expectingColor) {
-          // Esperando uma cor (palavra) ou um código
-          if (/^\d{3}$/.test(part)) {
-            // Se for um código, não esperamos mais uma cor
-            expectingColor = false;
-          } else if (!/^[A-Za-z]+$/.test(part)) {
-            // Se não for uma palavra, é inválido
-            isValid = false;
-            const msg = `Formato inválido na posição ${i+1}: "${part}" deve ser uma palavra ou código de 3 dígitos`;
-            errors.push(msg);
-            console.error(`[Validador] ERRO: ${msg}`);
-            console.log(`[Validador] SOLUÇÃO: Na posição ${i+1}, utilize uma cor (apenas letras) ou um código (exatamente 3 dígitos)`);
+
+      // Validar cada comando individualmente
+      for (let cmdIndex = 0; cmdIndex < commands.length; cmdIndex++) {
+          const commandText = commands[cmdIndex];
+          let commandIsValid = true;
+          let commandErrors = [];
+          const parts = commandText.split(' ').filter(p => p.trim());
+          console.log(`[Validador] Validando comando #${cmdIndex + 1}: "${commandText}" (${parts.length} partes)`);
+
+          // Verificar se tem pelo menos 3 partes (localização, cor, código)
+          if (parts.length < 3) {
+              commandIsValid = false;
+              commandErrors.push(`Comando #${cmdIndex + 1} incompleto. Mínimo 3 partes (localização, cor, código)`);
+              console.error(`[Validador] ERRO [Cmd ${cmdIndex + 1}]: Formato incompleto.`);
           }
-        } else {
-          // Esperando um código de exatamente 3 dígitos
-          if (!/^\d{3}$/.test(part)) {
-            isValid = false;
-            const msg = `Formato inválido na posição ${i+1}: "${part}" deve ser um código de 3 dígitos`;
-            errors.push(msg);
-            console.error(`[Validador] ERRO: ${msg}`);
-            console.log(`[Validador] SOLUÇÃO: Na posição ${i+1}, utilize um código numérico com exatamente 3 dígitos (000-999)`);
+
+          if (commandIsValid) {
+              // Verificar se o primeiro item tem o formato correto (ex: A10, B5)
+              if (!locationPattern.test(parts[0])) {
+                  commandIsValid = false;
+                  const msg = `Comando #${cmdIndex + 1}: Localização inválida "${parts[0]}" (ex: A1, B10)`;
+                  commandErrors.push(msg);
+                  console.error(`[Validador] ERRO [Cmd ${cmdIndex + 1}]: ${msg}`);
+              }
+              
+              // Verificar se tem uma cor válida como segunda parte
+              if (!/^[A-Za-z]+$/.test(parts[1])) {
+                  commandIsValid = false;
+                  const msg = `Comando #${cmdIndex + 1}: Cor inválida "${parts[1]}" (deve ser palavra)`;
+                  commandErrors.push(msg);
+                  console.error(`[Validador] ERRO [Cmd ${cmdIndex + 1}]: ${msg}`);
+              }
+              
+              // Verificar se tem um código válido (exatamente 3 dígitos) como terceira parte
+              if (!/^\d{3}$/.test(parts[2])) {
+                  commandIsValid = false;
+                  const msg = `Comando #${cmdIndex + 1}: Código inválido "${parts[2]}" (deve ter 3 dígitos)`;
+                  commandErrors.push(msg);
+                  console.error(`[Validador] ERRO [Cmd ${cmdIndex + 1}]: ${msg}`);
+              }
           }
-          // Depois de um código, esperamos uma cor novamente
-          expectingColor = true;
-        }
-      }
-      
-      // Exibir ou esconder o botão com base na validação
-      if (isValid) {
+
+          // Verificar as partes adicionais (a partir da 4ª parte)
+          if (commandIsValid) {
+               for (let i = 3; i < parts.length; i++) {
+                  const currentPart = parts[i];
+                  const isCurrentPartColor = /^[A-Za-z]+$/.test(currentPart);
+                  const isCurrentPartCode = /^\d{3}$/.test(currentPart);
+
+                  // Check if current part is neither a valid color nor a valid code
+                  if (!isCurrentPartColor && !isCurrentPartCode) {
+                      commandIsValid = false;
+                      const msg = `Comando #${cmdIndex + 1}: Parte inválida na posição ${i + 1} "${currentPart}" (deve ser cor ou código)`;
+                      commandErrors.push(msg);
+                      console.error(`[Validador] ERRO [Cmd ${cmdIndex + 1}]: ${msg}`);
+                      break; // Exit loop for this command
+                  }
+                  
+                  // (Optional stricter check: ensure alternation - uncomment if needed)
+                  /* 
+                  const previousPart = parts[i - 1];
+                  const isPreviousPartColor = /^[A-Za-z]+$/.test(previousPart);
+                  const isPreviousPartCode = /^\d{3}$/.test(previousPart);
+                  if ((isCurrentPartColor && isPreviousPartColor) || (isCurrentPartCode && isPreviousPartCode)) {
+                       commandIsValid = false;
+                       const msg = `Comando #${cmdIndex+1}: Sequência inválida ${parts[i-1]} -> ${currentPart}`;
+                       commandErrors.push(msg);
+                       console.error(`[Validador] ERRO [Cmd ${cmdIndex + 1}]: ${msg}`);
+                       break;
+                  }
+                   */
+              }
+          }
+
+          if (!commandIsValid) {
+              overallIsValid = false;
+              allErrors.push(...commandErrors);
+              // Não paramos no primeiro erro, continuamos validando outros comandos
+          }
+      } // Fim do loop de comandos
+
+      // Exibir ou esconder o botão com base na validação GERAL
+      if (overallIsValid) {
         button.style.display = '';
-        console.log('[Validador] Entrada válida!');
+        console.log('[Validador] Todos os comandos são válidos!');
       } else {
         button.style.display = 'none';
-        console.error('[Validador] Erros de validação:', errors);
-        console.log('[Validador] Exemplo correto: "A1 preto 203 branco 102"');
+        console.error('[Validador] Erros de validação encontrados:', allErrors);
+        // O exemplo correto agora depende, talvez remover ou generalizar
+        console.log('[Validador] Exemplo: "A1 preto 203, B2 azul 005"'); 
       }
     }
     
