@@ -322,35 +322,4 @@ function showSyncSuccess() {
   setTimeout(() => {
     btn.textContent = originalText;
   }, 2000);
-}
-
-// Adicionar estilos para os botões
-document.addEventListener('DOMContentLoaded', function() {
-  const style = document.createElement('style');
-  style.textContent = `
-    .cloud-sync-buttons {
-      margin: 15px 0;
-      display: flex;
-      gap: 10px;
-    }
-    
-    .cloud-sync-buttons button {
-      padding: 8px 15px;
-      background: #f0f8ff;
-      border: 1px solid #a0c7e7;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    
-    .cloud-sync-buttons button:hover {
-      background: #d6eaff;
-    }
-    
-    .cloud-sync-buttons button.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-  `;
-  document.head.appendChild(style);
-}); 
+} 
