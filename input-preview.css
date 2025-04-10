@@ -1,0 +1,136 @@
+/* input-preview.css */
+
+/* Main container for all previews */
+.input-preview-container {
+  margin: 10px 0;
+  padding: 8px; /* Slightly reduced padding */
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: rgba(30, 30, 30, 0.8); /* Darker, less transparent background */
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 0.9em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Container for each individual command preview */
+.input-preview-command-section {
+  background-color: rgba(50, 50, 50, 0.7); /* Slightly lighter than main container */
+  border: 1px solid #666; /* Slightly lighter border */
+  padding: 6px; /* Reduced padding */
+  border-radius: 3px;
+  margin-bottom: 6px; /* Reduced spacing */
+}
+
+.input-preview-command-section:last-child {
+  margin-bottom: 0;
+}
+
+/* Location text styling */
+.input-preview-location {
+  font-weight: bold;
+  margin-bottom: 4px; /* Reduced margin */
+  color: #00ffcc; /* Brighter color for location */
+  font-size: 1em; /* Make location text slightly bigger relative to table */
+  background-color: rgba(0, 0, 0, 0.3); /* Darker background */
+  padding: 2px 5px; /* Adjusted padding */
+  border-radius: 2px;
+  display: block; /* Ensure it takes its own line */
+  /* Removed inline-block */
+}
+
+/* Table styling */
+.input-preview-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 4px; /* Reduced margin */
+  font-size: 0.85em; /* Smaller font for table */
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid #555; /* Add subtle border to table itself */
+}
+
+/* Table header row and cells */
+.input-preview-header-row th {
+  background-color: rgba(0, 0, 0, 0.4); /* Darker header */
+  border-bottom: 1px solid #777; /* Match table border contrast */
+  padding: 3px 5px; /* Reduced padding */
+  text-align: left;
+  font-weight: 600;
+  color: #ddd;
+}
+
+/* Table data row and cells */
+.input-preview-data-row td {
+  padding: 3px 5px; /* Reduced padding */
+  border-bottom: 1px solid #555;
+  text-align: left;
+  color: #ccc;
+}
+
+.input-preview-data-row:last-child td {
+  border-bottom: none;
+}
+
+/* Zebra striping (subtle) */
+.input-preview-data-row:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.input-preview-data-row:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Specific column styling */
+.input-preview-header-qty,
+.input-preview-data-qty {
+  text-align: center;
+  width: 35px; /* Further reduced width */
+}
+
+.input-preview-header-code,
+.input-preview-data-code {
+  font-weight: bold;
+  color: #fff; /* Make code stand out more */
+}
+
+.input-preview-header-color,
+.input-preview-data-color {
+  /* Style for color */
+}
+
+/* --- Cloud Sync Buttons Styling Removed - Moved to cloud-sync-buttons.css --- */
+
+/* Container for the buttons */
+#cloud-sync-buttons { /* Assuming it's an ID */
+  margin-top: 15px; /* Add some space above the buttons */
+  /* Add other container styles if needed, like text-align: center; */
+}
+
+/* Styling for buttons within the container */
+#cloud-sync-buttons button {
+  background-color: #333; /* Dark background */
+  color: #eee; /* Light text */
+  border: 1px solid #555; /* Subtle border */
+  padding: 6px 12px; /* Button padding */
+  margin: 0 5px; /* Spacing between buttons */
+  border-radius: 3px; /* Rounded corners */
+  font-family: 'Consolas', 'Courier New', monospace; /* Match font */
+  font-size: 0.9em; /* Match font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.2s ease, border-color 0.2s ease; /* Smooth transition */
+}
+
+/* Hover state for buttons */
+#cloud-sync-buttons button:hover {
+  background-color: #444; /* Slightly lighter on hover */
+  border-color: #777;
+}
+
+/* Active state (when clicked) */
+#cloud-sync-buttons button:active {
+  background-color: #222; /* Darker when clicked */
+  border-color: #444;
+} 
