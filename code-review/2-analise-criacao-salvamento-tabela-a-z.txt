@@ -9,8 +9,6 @@ The core logic for table structure, rendering, data handling, and persistence is
 - `auto-save.js`: Handles saving to/loading from LocalStorage.
 - `export-import.js`: Manages JSON export and import functionality.
 - `cloud-sync.js`: Handles saving to/loading from Firebase Cloud.
-- `realtime-sync.js`: Manages real-time Firebase synchronization.
-- `firebase-sync-enforcer.js`: Ensures local changes are pushed to Firebase.
 - `table-editor.js`: Adds row manipulation controls to subtables.
 - `script.js`: Adds IDs to table elements.
 - `editable.js`: Makes cells editable (potential overlap with auto-save/sync).
@@ -24,7 +22,7 @@ The core logic for table structure, rendering, data handling, and persistence is
 **Recommendations:**
 1.  **Centralize Column Definition:** Define the desired columns (e.g., `['A', 'B', ..., 'Z']`) in a single, accessible location (e.g., a configuration variable or function in `render-table.js` or a dedicated config file).
 2.  **Dynamic Rendering:** Modify `render-table.js` to generate headers and column cells dynamically based on the centralized definition, rather than hardcoding them.
-3.  **Refactor Data Handling:** Update all data extraction, saving, loading, and synchronization logic (in `auto-save.js`, `export-import.js`, `cloud-sync.js`, `realtime-sync.js`, `firebase-sync-enforcer.js`) to dynamically iterate over the columns defined centrally. Replace fixed loops and hardcoded index/letter conversions with logic derived from the central definition.
+3.  **Refactor Data Handling:** Update all data extraction, saving, loading, and synchronization logic (in `auto-save.js`, `export-import.js`, `cloud-sync.js`) to dynamically iterate over the columns defined centrally. Replace fixed loops and hardcoded index/letter conversions with logic derived from the central definition.
 4.  **Review Helper Scripts:** Check `table-editor.js`, `script.js`, and `editable.js` for any logic dependent on the fixed A-D structure and update accordingly.
 5.  **Verify Storage Compatibility:** Ensure the chosen storage formats (JSON structure, Firebase paths) can inherently handle a variable number of columns without modification, provided the code generating/reading them is correctly refactored. Paths based on numeric indices (`${tableId}/${rowIndex}/${cellIndex}`) might adapt better than paths using letters, but consistency is key.
 6.  **Check CSS:** Review `estilo.css` for any selectors targeting specific column positions (e.g., `td:nth-child(6)` for column 'D') that would need adjustment for more columns.
