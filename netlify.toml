@@ -5,6 +5,12 @@
   # Comando para gerar o arquivo de configuração do Firebase durante o build
   command = "node generate-config.js"
 
+# Settings for the 'extend-table' branch deploy (inherits base build)
+[context.extend-table]
+
+# Settings for Deploy Previews (inherits base build)
+[context.deploy-preview]
+
 # Configuração para SPAs, redirecionando todas as rotas para index.html
 [[redirects]]
   from = "/*"
