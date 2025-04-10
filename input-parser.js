@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // --- Limpar e Reescrever a Subtabela --- 
-        console.log(`[Parser] Atualizando a subtabela ${colLetter}${andar}...`);
+        console.log(`[Parser] INFO: Limpando e reescrevendo a subtabela ${colLetter}${andar}...`);
         // Limpar subtabela (exceto cabeçalho)
         while (targetTable.rows.length > 1) {
             targetTable.deleteRow(1);
@@ -281,15 +281,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     } // Fim do loop de aplicação por tabela
 
-    // --- Finalização --- 
-    console.log("=====================================================");
-    console.log("[Parser] FIM DA APLICAÇÃO DAS ATUALIZAÇÕES");
-    console.log("=====================================================");
-
+    // --- Finalização e Limpeza --- 
     if (!hasErrors) {
-        console.log(`[Parser] Processamento geral concluído com sucesso! Total de ${totalProdutosAtualizados} produtos atualizados em ${Object.keys(allTableUpdates).length} tabela(s).`);
+        console.log("=====================================================");
+        console.log("[Parser] PROCESSAMENTO GERAL CONCLUÍDO COM SUCESSO");
+        console.log("=====================================================");
         
-        // Salvar comando no histórico se existir
+        // Limpar o conteúdo do input-preview
+        const previewContainer = document.querySelector('.input-preview-container');
+        if (previewContainer) {
+            previewContainer.innerHTML = ''; // Limpa o conteúdo
+            console.log("[Parser] INFO: Limpando o conteúdo do container de preview.");
+        } else {
+            console.warn("[Parser] ALERTA: Container de preview (.input-preview-container) não encontrado para limpar.");
+        }
+
+        // Adicionar ao histórico de comandos
         try {
             if (typeof saveCommandToHistory === 'function') {
                 saveCommandToHistory(fullInputText); // Salva o comando completo original
