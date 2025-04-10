@@ -1,0 +1,13 @@
+escreva um arquivo txt novo
+nao alterte nenhum antigo
+mantanha todas as features ja criadas e adicione atualizacoes
+
+---------------------
+
+*editar
+
+
+---------------------
+
+nao mexa com o git
+escreva de forma extremamente minimalista e consisa
