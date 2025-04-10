@@ -1,0 +1,12 @@
+Por favor, faça a pré-visualização do input ser visualmente agradável.
+Seria ótimo se a pré-visualização do input tivesse um estilo melhor.
+Gostaríamos muito que a pré-visualização do input fosse bem estilizada.
+É importante que a pré-visualização do input tenha uma aparência profissional.
+Exigimos que a pré-visualização do input seja esteticamente impecável.
+Faça a pré-visualização do input ter um design EXCELENTE, por favor!
+É CRUCIAL que a pré-visualização do input seja VISUALMENTE ATRAENTE!
+A pré-visualização do input PRECISA TER um estilo FANTÁSTICO, sem desculpas!
+NÃO ACEITAREMOS NADA MENOS que uma pré-visualização de input PERFEITAMENTE ESTILIZADA!
+PELO AMOR DE DEUS, FAÇA A PREVISUALIZAÇÃO DO INPUT SER INCRIVELMENTE BONITA AGORA! 
+
+o arquivo é o input-preview.js
