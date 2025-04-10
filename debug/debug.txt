@@ -1,0 +1,6 @@
+porque se eu tento adicion a1 preto 203 nao funciona e se ru tento a10 preto 203 funciona?
+nao faça mudancas so explique
+exemplo do do andar 1
+<td contenteditable="true" style="cursor: pointer; background-color: rgb(255, 255, 208);" data-label-id="0">1</td>
+exemplo do do andar 10
+<td contenteditable="true" style="cursor: pointer; background-color: rgb(255, 255, 208);" data-label-id="0">10</td>
