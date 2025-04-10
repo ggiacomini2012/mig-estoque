@@ -1,0 +1,12 @@
+escreva um arquivo txt novo
+nao alterte nenhum antigo
+mantanha todas as features ja criadas e adicione atualizacoes
+
+---------------------
+
+Create a TODO list based on the implementation plan outlined in `code-review/2-analise-criacao-salvamento-tabela-a-z.txt`.
+
+---------------------
+
+nao mexa com o git
+escreva de forma extremamente minimalista e consisa 
