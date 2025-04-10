@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Criar elementos de UI
   const container = document.createElement('div');
+  container.id = 'input-parser-container';
   const input = document.createElement('input');
   const button = document.createElement('button');
   
@@ -17,341 +18,313 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Adicionar handler de evento
   button.onclick = function() {
-    const text = input.value.trim();
-    console.log("-----------------------------------------------------");
-    console.log("[Parser] Iniciando processamento da entrada:", text);
-    console.log("-----------------------------------------------------");
+    const fullInputText = input.value.trim();
+    console.log("=====================================================");
+    console.log("[Parser] INÍCIO DO PROCESSAMENTO GERAL");
+    console.log("=====================================================");
+    console.log("[Parser] Input Completo Recebido:", fullInputText);
     
-    if (!text) {
-      console.error("[Parser] ERRO: Texto de entrada vazio. Por favor, digite um comando válido.");
-      alert("Por favor, digite um comando válido. Exemplo: A1 preto 203");
+    if (!fullInputText) {
+      console.error("[Parser] ERRO GERAL: Texto de entrada vazio.");
+      alert("Por favor, digite um ou mais comandos válidos. Exemplo: A1 preto 203, B2 azul 005");
       return;
     }
-    
-    const parts = text.split(' ');
-    if (parts.length < 2) {
-      console.error("[Parser] ERRO: Formato inválido. O comando deve conter pelo menos localização e cor/código. Exemplo: A1 preto 203");
-      alert("Formato inválido. O comando deve conter pelo menos localização e cor/código. Exemplo: A1 preto 203");
-      return;
-    }
-    
-    // Extrair localização (ex: A10)
-    const location = parts[0];
-    const colLetter = location.charAt(0).toUpperCase();
-    const andar = location.substring(1);
-    
-    console.log(`[Parser] ETAPA 1/4: Localização identificada: coluna ${colLetter}, andar ${andar}`);
-    
-    // Estrutura de logging dos passos de localização
-    console.log("[Parser] ETAPA 2/4: Iniciando busca pela linha (andar) na tabela principal...");
-    
-    // Log de todas as linhas disponíveis
-    const allRows = document.querySelectorAll('tbody tr');
-    console.log(`[Parser] INFO: Tabela principal tem ${allRows.length} linhas.`);
-    
-    const andaresDisponiveis = Array.from(allRows).map(r => {
-      if (r.cells.length > 0) return r.cells[0].textContent.trim();
-      return "célula vazia";
-    }).join(', ');
-    console.log(`[Parser] INFO: Andares disponíveis: [${andaresDisponiveis}]`);
-    
-    // Encontrar tabela correta - primeiro a linha (andar)
-    console.log("[Parser] DEBUG: Estrutura completa da tabela:");
-    console.log("[Parser] DEBUG: Número total de linhas na tabela:", allRows.length);
-    
-    // Mostrar a estrutura de todas as linhas para depuração
-    Array.from(allRows).forEach((r, index) => {
-      if (r.cells.length > 0) {
-        const primeiraColuna = r.cells[0].textContent.trim();
-        const subtablesNessaLinha = Array.from(r.querySelectorAll('.subtable')).map(st => st.id || 'sem-id');
-        console.log(`[Parser] DEBUG: Linha ${index}: Primeira coluna="${primeiraColuna}", Subtabelas=${JSON.stringify(subtablesNessaLinha)}`);
-      }
-    });
-    
-    const row = Array.from(allRows).find(r => {
-      if (r.cells.length === 0) {
-        console.log(`[Parser] INFO: Linha ignorada - sem células`);
-        return false;
-      }
-      const rowAndar = r.cells[0].textContent.trim();
-      console.log(`[Parser] INFO: Comparando andar '${andar}' com linha que contém '${rowAndar}'`);
-      return rowAndar === andar;
-    });
-    
-    if (!row) {
-      console.error(`[Parser] ERRO: Andar ${andar} não encontrado na tabela. Verifique se o número é correto.`);
-      console.log(`[Parser] SOLUÇÃO: Use um dos andares disponíveis: [${andaresDisponiveis}]`);
-      alert(`Andar ${andar} não encontrado na tabela. Andares disponíveis: ${andaresDisponiveis}`);
-      return;
-    }
-    
-    console.log(`[Parser] SUCESSO: Andar ${andar} encontrado na tabela.`);
-    console.log(`[Parser] ETAPA 3/4: Buscando coluna ${colLetter} na linha do andar ${andar}...`);
-    
-    // Agora buscar a coluna correta
-    const colIndex = colLetter.charCodeAt(0) - 64 + 1; // A=2, B=3, etc.
-    console.log(`[Parser] INFO: Letra ${colLetter} convertida para índice ${colIndex} (offset +1 para andar/tamanho)`);
-    console.log(`[Parser] INFO: Linha encontrada tem ${row.cells.length} células disponíveis.`);
-    
-    // Debug específico para o caso a1 vs a2
-    if (colLetter === 'A' && (andar === '1' || andar === '2')) {
-      console.log("[Parser] DEBUG: Caso específico A1/A2 detectado, analisando em detalhe...");
-      
-      // Listar todas as células desta linha com índices
-      for (let i = 0; i < row.cells.length; i++) {
-        const cell = row.cells[i];
-        const temSubtabela = cell.querySelector('.subtable') !== null;
-        const idSubtabela = cell.querySelector('.subtable')?.id || 'nenhuma';
-        console.log(`[Parser] DEBUG: Célula[${i}]: Tem subtabela=${temSubtabela}, ID=${idSubtabela}, HTML=${cell.innerHTML.substring(0, 50)}...`);
-      }
-      
-      // Tentar localizar explicitamente as subtabelas para A1 e A2
-      const todosSubtables = document.querySelectorAll('.subtable');
-      console.log(`[Parser] DEBUG: Total de subtabelas na página: ${todosSubtables.length}`);
-      
-      const subtableA1 = document.querySelector('#subtable-1-A');
-      const subtableA2 = document.querySelector('#subtable-2-A');
-      
-      console.log(`[Parser] DEBUG: #subtable-1-A encontrado: ${subtableA1 !== null}`);
-      console.log(`[Parser] DEBUG: #subtable-2-A encontrado: ${subtableA2 !== null}`);
-      
-      if (subtableA1) {
-        const trA1 = subtableA1.closest('tr');
-        const tdA1 = subtableA1.closest('td');
-        console.log(`[Parser] DEBUG: #subtable-1-A está em uma TR: ${trA1 !== null}`);
-        console.log(`[Parser] DEBUG: #subtable-1-A está em uma TD: ${tdA1 !== null}`);
-        if (trA1) {
-          console.log(`[Parser] DEBUG: TR de #subtable-1-A tem primeira célula com texto: ${trA1.cells[0]?.textContent || 'sem texto'}`);
+
+    // Dividir a entrada completa em comandos individuais pela vírgula
+    const commands = fullInputText.split(',').map(cmd => cmd.trim()).filter(cmd => cmd);
+    console.log(`[Parser] INFO: ${commands.length} comando(s) detectado(s):`, commands);
+
+    // Objeto para acumular todas as atualizações de todas as tabelas
+    const allTableUpdates = {}; // Estrutura: { 'andar-coluna': { 'codigo_cor': { qty, code, color } } }
+    let hasErrors = false;
+
+    // Processar cada comando individualmente
+    for (const commandText of commands) {
+        console.log("-----------------------------------------------------");
+        console.log(`[Parser] Processando comando individual: "${commandText}"`);
+        console.log("-----------------------------------------------------");
+
+        const parts = commandText.split(' ').filter(p => p.trim()); // Filtra partes vazias
+        
+        if (parts.length < 3) { // Mudado de < 2 para < 3 (loc, cor, codigo)
+            console.error(`[Parser] ERRO no comando "${commandText}": Formato inválido. Mínimo de 3 partes (localização, cor, código).`);
+            alert(`Erro no comando "${commandText}": Formato inválido. Exemplo: A1 preto 203`);
+            hasErrors = true;
+            continue; // Pula para o próximo comando
         }
-      }
-    }
-    
-    // Listar colunas disponíveis
-    const colunasDisponiveis = [];
-    for (let i = 2; i < row.cells.length; i++) {
-      const letraColuna = String.fromCharCode(64 + (i - 1));
-      colunasDisponiveis.push(letraColuna);
-    }
-    console.log(`[Parser] INFO: Colunas disponíveis: [${colunasDisponiveis.join(', ')}]`);
-    
-    const targetCell = row.cells[colIndex];
-    if (!targetCell) {
-      console.error(`[Parser] ERRO: Coluna ${colLetter} não encontrada. Índice calculado: ${colIndex}, Total de colunas: ${row.cells.length}`);
-      console.log(`[Parser] DETALHE: As colunas A, B, C... começam no índice 2 (após andar e tamanho).`);
-      console.log(`[Parser] SOLUÇÃO: Use uma das colunas disponíveis: [${colunasDisponiveis.join(', ')}]`);
-      alert(`Coluna ${colLetter} não encontrada na tabela. Colunas disponíveis: ${colunasDisponiveis.join(', ')}`);
-      return;
-    }
-    
-    console.log(`[Parser] SUCESSO: Coluna ${colLetter} encontrada na linha do andar ${andar}.`);
-    console.log(`[Parser] ETAPA 4/4: Buscando subtabela na célula ${colLetter}${andar}...`);
-    
-    // Agora buscar a subtabela
-    console.log(`[Parser] INFO: Conteúdo HTML da célula: ${targetCell.innerHTML.length} caracteres`);
-    console.log(`[Parser] INFO: Procurando elementos '.subtable' dentro da célula...`);
-    
-    // Tenta buscar a subtabela pelo seletor normal
-    let targetTable = targetCell.querySelector('.subtable');
-    
-    // Se não encontrar, tenta uma abordagem alternativa baseada no ID esperado
-    if (!targetTable) {
-      console.log(`[Parser] INFO: Tentando abordagem alternativa para encontrar a subtabela...`);
-      
-      // Tenta encontrar por ID específico (subtable-[ANDAR]-[COLUNA])
-      const expectedId = `subtable-${andar}-${colLetter}`;
-      console.log(`[Parser] INFO: Buscando subtabela pelo ID específico: ${expectedId}`);
-      
-      // Busca em toda a página, não apenas na célula atual
-      targetTable = document.querySelector(`#${expectedId}`);
-      
-      if (targetTable) {
-        console.log(`[Parser] SUCESSO: Subtabela encontrada pelo ID específico: ${expectedId}`);
-        
-        // Verificar se a tabela está realmente na célula esperada
-        const parentTd = targetTable.closest('td');
-        if (parentTd !== targetCell) {
-          console.warn(`[Parser] ALERTA: A subtabela encontrada não está na célula esperada ${colLetter}${andar}.`);
-          console.log(`[Parser] INFO: Verificando se o posicionamento da subtabela é coerente com a estrutura esperada...`);
+
+        // --- Extração e Validação da Localização ---
+        const location = parts[0];
+        const locationMatch = location.match(/^([A-Za-z])([0-9]{1,2})$/);
+        if (!locationMatch) {
+            console.error(`[Parser] ERRO no comando "${commandText}": Localização "${location}" inválida. Formato: Letra+Número(s) (ex: A1, B10).`);
+            alert(`Erro no comando "${commandText}": Localização "${location}" inválida.`);
+            hasErrors = true;
+            continue;
         }
-      }
-    }
-    
-    // Adicionar diagnóstico específico para o caso a1
-    if (colLetter === 'A' && andar === '1' && !targetTable) {
-      console.log("[Parser] SOLUÇÃO ESPECÍFICA: Tentando resolver o caso especial de A1...");
-      
-      // Tentativa específica para A1 - usar o seletor ID diretamente
-      const a1SpecificTable = document.querySelector('#subtable-1-A');
-      
-      if (a1SpecificTable) {
-        console.log("[Parser] INFO: Encontrada tabela com ID #subtable-1-A - verificando estrutura");
+        const colLetter = locationMatch[1].toUpperCase();
+        const andar = locationMatch[2];
+        const tableKey = `${andar}-${colLetter}`; // Chave única para a subtabela
         
-        // Verificar se tem a estrutura esperada
-        const temCabecalho = a1SpecificTable.rows.length > 0;
-        const temColunas = temCabecalho && a1SpecificTable.rows[0].cells.length >= 3;
-        
-        if (temCabecalho && temColunas) {
-          console.log("[Parser] SUCESSO: Subtabela A1 encontrada por ID e tem estrutura válida. Usando esta tabela.");
-          targetTable = a1SpecificTable;
+        console.log(`[Parser] ETAPA 1/4: Localização: Coluna ${colLetter}, Andar ${andar}`);
+
+        // --- Inicialização da estrutura de atualização para esta tabela (se não existir) ---
+        if (!allTableUpdates[tableKey]) {
+            allTableUpdates[tableKey] = { 
+                targetTable: null, // Será preenchido depois
+                existingProducts: {} 
+            };
+            console.log(`[Parser] INFO: Criando estrutura de atualização para ${tableKey}`);
         }
-      } else {
-        console.error("[Parser] ERRO: Não foi possível encontrar tabela com ID #subtable-1-A mesmo com busca específica.");
-        console.log("[Parser] DIAGNÓSTICO AVANÇADO: Os IDs das subtabelas não seguem o padrão esperado ou há um erro na estrutura HTML.");
-      }
-    }
-    
-    if (!targetTable) {
-      const cellHasTable = targetCell.querySelector('table') !== null;
-      const cellHasAnyContent = targetCell.textContent.trim().length > 0;
-      
-      console.error(`[Parser] ERRO: Subtabela não encontrada na célula ${colLetter}${andar}.`);
-      console.log(`[Parser] DETALHE: Célula ${cellHasAnyContent ? 'contém' : 'não contém'} algum texto.`);
-      console.log(`[Parser] DETALHE: Célula ${cellHasTable ? 'contém' : 'não contém'} uma tabela, mas ${cellHasTable ? 'não tem' : 'falta'} a classe '.subtable'.`);
-      console.log(`[Parser] DETALHE: Primeiros 100 caracteres da célula: ${targetCell.innerHTML.substring(0, 100)}...`);
-      
-      let solucao = "Verifique se a estrutura da tabela está correta e se existem subtabelas definidas.";
-      if (!cellHasTable && !cellHasAnyContent) {
-        solucao = "Esta célula está vazia. Adicione uma subtabela primeiro usando o editor de tabela.";
-      } else if (!cellHasTable) {
-        solucao = "Esta célula contém texto, mas não contém uma tabela. Limpe o conteúdo e adicione uma subtabela.";
-      } else if (cellHasTable) {
-        solucao = "Esta célula contém uma tabela, mas falta a classe 'subtable'. Verifique a estrutura HTML.";
-      }
-      
-      console.log(`[Parser] SOLUÇÃO: ${solucao}`);
-      alert(`Não foi possível encontrar uma subtabela na célula ${colLetter}${andar}. ${solucao}`);
-      return;
-    }
-    
-    console.log(`[Parser] SUCESSO: Subtabela encontrada na célula ${colLetter}${andar}. ID: ${targetTable.id || 'sem id'}`);
-    console.log(`[Parser] INFO: A subtabela tem ${targetTable.rows.length} linhas.`);
-    
-    // Verificar se já existem produtos na tabela e adicioná-los ao objeto de produtos
-    const existingProducts = {};
-    
-    // Pular a primeira linha (cabeçalho)
-    for (let i = 1; i < targetTable.rows.length; i++) {
-      const row = targetTable.rows[i];
-      if (row.cells.length >= 3) {
-        const qty = parseInt(row.cells[0].textContent) || 0;
-        const code = row.cells[1].textContent.trim();
-        const color = row.cells[2].textContent.trim();
-        const key = `${code}_${color}`;
+
+        // --- Processamento de Cores e Códigos --- 
+        let currentColor = '-'; // Cor padrão inicial
+        let productCountInCommand = 0;
+        let firstColorSet = false;
         
-        existingProducts[key] = {
-          qty: qty,
-          code: code,
-          color: color
-        };
-        console.log(`[Parser] INFO: Produto existente carregado: ${qty}x ${code} (${color})`);
-      }
-    }
-    
-    // Agrupar códigos e suas quantidades
-    let currentColor = '-';
-    let productCount = 0;
-    
-    console.log("[Parser] Iniciando processamento dos produtos no comando...");
-    
-    for (let i = 1; i < parts.length; i++) {
-      const part = parts[i].trim();
-      if (!part) continue; // Ignorar partes vazias
-      
-      // Se for número de exatamente 3 dígitos, é um código de produto
-      if (/^\d{3}$/.test(part)) {
-        const code = part;
-        const key = `${code}_${currentColor}`;
-        
-        console.log(`[Parser] INFO: Processando código: ${code}, cor atual: ${currentColor}`);
-        
-        // Se o código+cor não existir, criar novo
-        if (!existingProducts[key]) {
-          existingProducts[key] = { qty: 1, code: code, color: currentColor };
-          console.log(`[Parser] INFO: Novo produto: ${code} (${currentColor})`);
-        } else {
-          // Se já existir, apenas incrementar quantidade
-          existingProducts[key].qty++;
-          console.log(`[Parser] INFO: Incrementado produto existente: ${existingProducts[key].qty}x ${code} (${currentColor})`);
+        console.log("[Parser] Iniciando processamento de cores e códigos...");
+        for (let i = 1; i < parts.length; i++) {
+            const part = parts[i];
+            
+            if (/^\d{3}$/.test(part)) {
+                // É um código
+                const code = part;
+                if (!firstColorSet) {
+                    console.error(`[Parser] ERRO no comando "${commandText}": Código "${code}" encontrado antes da primeira cor.`);
+                    alert(`Erro no comando "${commandText}": Código "${code}" inválido antes da primeira cor.`);
+                    hasErrors = true;
+                    break; // Interrompe processamento deste comando
+                }
+                const productKey = `${code}_${currentColor}`;
+                console.log(`[Parser] INFO: Processando código: ${code}, cor atual: ${currentColor}`);
+                
+                // Inicializa se não existir no acumulador
+                if (!allTableUpdates[tableKey].existingProducts[productKey]) {
+                    allTableUpdates[tableKey].existingProducts[productKey] = { qty: 0, code: code, color: currentColor };
+                }
+                // Incrementa quantidade
+                allTableUpdates[tableKey].existingProducts[productKey].qty++;
+                console.log(`[Parser] INFO: Quantidade acumulada para ${productKey} em ${tableKey}: ${allTableUpdates[tableKey].existingProducts[productKey].qty}`);
+                productCountInCommand++;
+
+            } else if (/^[A-Za-z]+$/.test(part)) {
+                // É uma cor
+                currentColor = part.toLowerCase();
+                firstColorSet = true;
+                console.log(`[Parser] INFO: Nova cor definida: ${currentColor}`);
+            } else if (/^\d+$/.test(part)) {
+                 // Número, mas não 3 dígitos
+                 console.error(`[Parser] ERRO no comando "${commandText}": Código "${part}" inválido. Deve ter 3 dígitos.`);
+                 alert(`Erro no comando "${commandText}": Código "${part}" inválido. Use 3 dígitos (ex: 005).`);
+                 hasErrors = true;
+                 break;
+            } else {
+                 // Inválido
+                 console.error(`[Parser] ERRO no comando "${commandText}": Parte "${part}" inválida. Deve ser cor (letras) ou código (3 dígitos).`);
+                 alert(`Erro no comando "${commandText}": Parte "${part}" inválida.`);
+                 hasErrors = true;
+                 break;
+            }
         }
-        productCount++;
-      } else if (/^\d+$/.test(part)) {
-        // Se for um número, mas não tiver 3 dígitos, avisar
-        console.error(`[Parser] ERRO: Código "${part}" inválido. Os códigos devem ter exatamente 3 dígitos.`);
-        console.log(`[Parser] SOLUÇÃO: Use zeros à esquerda para códigos com menos de 3 dígitos. Ex: "${part.padStart(3, '0')}"`);
-        alert(`Código "${part}" inválido. Os códigos devem ter exatamente 3 dígitos. Use zeros à esquerda se necessário (ex: 001, 052).`);
+        
+        if (hasErrors) continue; // Se houve erro neste comando, vai para o próximo
+
+        if (productCountInCommand === 0) {
+            console.warn(`[Parser] ALERTA no comando "${commandText}": Nenhum código de produto válido encontrado.`);
+            // Não consideramos isso um erro fatal, pode ser apenas um comando de definição de cor?
+            // alert(`Atenção no comando "${commandText}": Nenhum código de produto encontrado.`);
+        }
+        console.log(`[Parser] FIM Processamento comando individual: "${commandText}"`);
+    } // Fim do loop de comandos individuais
+
+    // --- Se houveram erros em algum comando, não aplicar nada --- 
+    if (hasErrors) {
+        console.error("[Parser] ERRO GERAL: Um ou mais comandos continham erros. Nenhuma alteração foi aplicada.");
+        alert("Um ou mais comandos continham erros. Verifique o console para detalhes. Nenhuma alteração foi aplicada.");
         return;
-      } else {
-        // Se não for número, é uma cor
-        currentColor = part.toLowerCase();
-        console.log(`[Parser] INFO: Nova cor definida: ${currentColor}`);
-      }
+    }
+
+    // --- Aplicação das Atualizações Acumuladas --- 
+    console.log("=====================================================");
+    console.log("[Parser] INÍCIO DA APLICAÇÃO DAS ATUALIZAÇÕES");
+    console.log("=====================================================");
+    
+    const allRows = document.querySelectorAll('#estoque-table tbody tr'); // Busca tabela principal pelo ID
+    if (!allRows || allRows.length === 0) {
+        console.error("[Parser] ERRO FATAL: Tabela principal #estoque-table não encontrada ou vazia.");
+        alert("Erro crítico: Tabela principal não encontrada. A página pode não ter carregado corretamente.");
+        return;
     }
     
-    if (productCount === 0) {
-      console.warn("[Parser] ALERTA: Nenhum código de produto válido encontrado no comando. Verifique se o formato está correto.");
-      console.log("[Parser] SOLUÇÃO: O comando deve incluir pelo menos um código de 3 dígitos após a cor.");
-      alert("Nenhum código de produto válido encontrado. Formato esperado: [Localização] [Cor] [Código de 3 dígitos] ...");
-      return;
-    }
+    let totalProdutosAtualizados = 0;
     
-    console.log("[Parser] Atualizando tabela com os produtos processados...");
-    
-    // Limpar a tabela existente (exceto o cabeçalho)
-    while (targetTable.rows.length > 1) {
-      targetTable.deleteRow(1);
-    }
-    
-    // Adicionar produtos à tabela
-    let produtosAdicionados = 0;
-    for (const key in existingProducts) {
-      // Adicionar nova linha
-      const newRow = targetTable.insertRow();
-      
-      // Células: Qtd, COD, COR
-      const qtdCell = newRow.insertCell();
-      qtdCell.textContent = existingProducts[key].qty;
-      qtdCell.setAttribute('contenteditable', 'true');
-      
-      const codCell = newRow.insertCell();
-      codCell.textContent = existingProducts[key].code;
-      codCell.setAttribute('contenteditable', 'true');
-      
-      const corCell = newRow.insertCell();
-      corCell.textContent = existingProducts[key].color;
-      corCell.setAttribute('contenteditable', 'true');
-      
-      produtosAdicionados++;
-    }
-    
-    console.log(`[Parser] SUCESSO: Total de ${produtosAdicionados} produtos adicionados/atualizados na tabela ${colLetter}${andar}`);
-    
-    // Salvar comando no histórico se existir
-    try {
-      if (typeof saveCommandToHistory === 'function') {
-        saveCommandToHistory(text);
-        console.log("[Parser] INFO: Comando salvo no histórico via função saveCommandToHistory");
-      } else {
-        // Armazenar no localStorage diretamente
-        const historicoDeComandos = JSON.parse(localStorage.getItem('commandHistory') || '[]');
-        historicoDeComandos.unshift(text); // Adicionar ao início
+    // Iterar sobre cada subtabela que precisa ser atualizada
+    for (const tableKey in allTableUpdates) {
+        const [andar, colLetter] = tableKey.split('-');
+        const updateData = allTableUpdates[tableKey];
         
-        // Manter apenas os últimos 50 comandos
-        while (historicoDeComandos.length > 50) {
-          historicoDeComandos.pop();
+        console.log(`-----------------------------------------------------`);
+        console.log(`[Parser] Aplicando atualizações para ${colLetter}${andar} (Chave: ${tableKey})`);
+        console.log(`-----------------------------------------------------`);
+
+        // --- Encontrar a Linha (Andar) --- 
+        const row = Array.from(allRows).find(r => r.cells.length > 0 && r.cells[0].textContent.trim() === andar);
+        if (!row) {
+            console.error(`[Parser] ERRO ao aplicar: Andar ${andar} não encontrado na tabela principal.`);
+            alert(`Erro ao aplicar atualizações: Andar ${andar} não encontrado.`);
+            hasErrors = true; // Marca erro para não limpar input/salvar histórico
+            continue; // Pula para a próxima tabela
+        }
+        console.log(`[Parser] SUCESSO: Linha do andar ${andar} encontrada.`);
+
+        // --- Encontrar a Célula (Coluna) --- 
+        const colIndex = colLetter.charCodeAt(0) - 64 + 1; // A=2, B=3...
+        const targetCell = row.cells[colIndex];
+        if (!targetCell) {
+            console.error(`[Parser] ERRO ao aplicar: Coluna ${colLetter} (índice ${colIndex}) não encontrada na linha do andar ${andar}.`);
+            alert(`Erro ao aplicar atualizações: Coluna ${colLetter} não encontrada no andar ${andar}.`);
+            hasErrors = true;
+            continue;
+        }
+         console.log(`[Parser] SUCESSO: Célula ${colLetter}${andar} encontrada.`);
+
+        // --- Encontrar a Subtabela --- 
+        let targetTable = updateData.targetTable; // Reutiliza se já encontrada
+        if (!targetTable) {
+            targetTable = targetCell.querySelector('.subtable');
+            // Tenta buscar por ID se não achar pela classe na célula
+            if (!targetTable) {
+                const expectedId = `subtable-${andar}-${colLetter}`;
+                targetTable = document.querySelector(`#${expectedId}`);
+                 if (targetTable) {
+                     console.log(`[Parser] INFO: Subtabela ${expectedId} encontrada por ID fora da célula esperada.`);
+                 }
+            }
+            // Tentativa específica A1
+            if (!targetTable && colLetter === 'A' && andar === '1') {
+                targetTable = document.querySelector('#subtable-1-A');
+                 if (targetTable) {
+                     console.log(`[Parser] INFO: Subtabela #subtable-1-A encontrada especificamente.`);
+                 }
+            }
+
+            if (!targetTable) {
+                console.error(`[Parser] ERRO ao aplicar: Subtabela não encontrada na célula ${colLetter}${andar}. Verifique a estrutura HTML.`);
+                alert(`Erro ao aplicar atualizações: Subtabela não encontrada em ${colLetter}${andar}.`);
+                hasErrors = true;
+                continue;
+            }
+            updateData.targetTable = targetTable; // Armazena para referência futura (se necessário)
+        }
+        console.log(`[Parser] SUCESSO: Subtabela encontrada (ID: ${targetTable.id || 'sem id'})`);
+
+        // --- Carregar Produtos Existentes DA TABELA ATUAL (antes de limpar) --- 
+        const productsCurrentlyInTable = {};
+        for (let i = 1; i < targetTable.rows.length; i++) {
+            const r = targetTable.rows[i];
+            if (r.cells.length >= 3) {
+                const qty = parseInt(r.cells[0].textContent) || 0;
+                const code = r.cells[1].textContent.trim();
+                const color = r.cells[2].textContent.trim();
+                if (qty > 0 && code && color) {
+                     const key = `${code}_${color}`;
+                     productsCurrentlyInTable[key] = { qty: qty, code: code, color: color };
+                     console.log(`[Parser] INFO: Produto existente na TABELA ${colLetter}${andar} carregado: ${qty}x ${code} (${color})`);
+                }
+            }
+        }
+
+        // --- Mesclar Produtos Existentes com Novos --- 
+        const finalProducts = { ...productsCurrentlyInTable }; // Começa com o que já estava lá
+        for (const key in updateData.existingProducts) {
+            const newProduct = updateData.existingProducts[key];
+            if (finalProducts[key]) {
+                finalProducts[key].qty += newProduct.qty; // Soma quantidades se já existe
+                console.log(`[Parser] INFO: Mesclado ${key}: Quantidade final ${finalProducts[key].qty}`);
+            } else {
+                finalProducts[key] = { ...newProduct }; // Adiciona novo produto
+                 console.log(`[Parser] INFO: Adicionado ${key}: Quantidade ${finalProducts[key].qty}`);
+            }
+        }
+
+        // --- Limpar e Reescrever a Subtabela --- 
+        console.log(`[Parser] Atualizando a subtabela ${colLetter}${andar}...`);
+        // Limpar subtabela (exceto cabeçalho)
+        while (targetTable.rows.length > 1) {
+            targetTable.deleteRow(1);
+        }
+
+        // Adicionar produtos finais à subtabela
+        let produtosAdicionadosNestaTabela = 0;
+        for (const key in finalProducts) {
+            if (finalProducts[key].qty <= 0) continue; // Não adiciona se quantidade for 0 ou menos
+
+            const newRow = targetTable.insertRow();
+            const product = finalProducts[key];
+
+            const qtdCell = newRow.insertCell();
+            qtdCell.textContent = product.qty;
+            qtdCell.setAttribute('contenteditable', 'true');
+
+            const codCell = newRow.insertCell();
+            codCell.textContent = product.code;
+            codCell.setAttribute('contenteditable', 'true');
+
+            const corCell = newRow.insertCell();
+            corCell.textContent = product.color;
+            corCell.setAttribute('contenteditable', 'true');
+            
+            produtosAdicionadosNestaTabela++;
+        }
+        totalProdutosAtualizados += produtosAdicionadosNestaTabela;
+        console.log(`[Parser] SUCESSO: ${produtosAdicionadosNestaTabela} produtos atualizados na subtabela ${colLetter}${andar}`);
+
+    } // Fim do loop de aplicação por tabela
+
+    // --- Finalização --- 
+    console.log("=====================================================");
+    console.log("[Parser] FIM DA APLICAÇÃO DAS ATUALIZAÇÕES");
+    console.log("=====================================================");
+
+    if (!hasErrors) {
+        console.log(`[Parser] Processamento geral concluído com sucesso! Total de ${totalProdutosAtualizados} produtos atualizados em ${Object.keys(allTableUpdates).length} tabela(s).`);
+        
+        // Salvar comando no histórico se existir
+        try {
+            if (typeof saveCommandToHistory === 'function') {
+                saveCommandToHistory(fullInputText); // Salva o comando completo original
+                console.log("[Parser] INFO: Comando completo salvo no histórico via função saveCommandToHistory");
+            } else {
+                // Fallback para localStorage
+                const historico = JSON.parse(localStorage.getItem('commandHistory') || '[]')
+                historico.unshift(fullInputText)
+                while (historico.length > 50) { historico.pop() }
+                localStorage.setItem('commandHistory', JSON.stringify(historico))
+                console.log('[Parser] INFO: Comando salvo no histórico via localStorage (fallback)')
+            }
+        } catch (e) {
+          console.error("[Parser] ERRO ao salvar no histórico:", e);
         }
         
-        localStorage.setItem('commandHistory', JSON.stringify(historicoDeComandos));
-        console.log("[Parser] INFO: Comando salvo no histórico via localStorage");
-      }
-    } catch (e) {
-      console.error("[Parser] ERRO ao salvar no histórico:", e);
+        // Limpar input após processamento SÓ SE NÃO HOUVE ERROS
+        input.value = '';
+        
+        // Disparar evento para auto-save, se necessário
+        if (typeof triggerAutoSave === 'function') {
+            triggerAutoSave('Input Parser Update');
+        } else if (window.dispatchEvent) {
+            // Fallback genérico
+            window.dispatchEvent(new CustomEvent('tableDataChanged'));
+        }
+        
+    } else {
+        console.error("[Parser] Processamento geral concluído com ERROS. Algumas atualizações podem não ter sido aplicadas. Verifique os logs acima.");
+        alert("Processamento concluído com erros. Verifique o console (F12) para mais detalhes.");
     }
-    
-    console.log("-----------------------------------------------------");
-    console.log("[Parser] Processamento concluído com sucesso!");
-    console.log("-----------------------------------------------------");
-    
-    // Limpar input após processamento
-    input.value = '';
+
+    console.log("=====================================================");
+    console.log("[Parser] FIM DO PROCESSAMENTO GERAL");
+    console.log("=====================================================");
+
   };
 }); 
