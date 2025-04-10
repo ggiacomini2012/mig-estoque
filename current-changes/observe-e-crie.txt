@@ -11,6 +11,4 @@ o conteudo do arquivo mudanças-atuais-js.txt sera copiado
 
 a parte *editar deve ser apagada e subtituida por uma versão minimalista, consisa e melhorada do paragrafo a seguir:
 
-vamos cobrir todo o projeto com testes 
-
 crie um promp melhorado do que mensionei, minimalista e consiso
