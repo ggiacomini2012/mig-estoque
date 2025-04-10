@@ -65,6 +65,14 @@ function initializeFirebaseIfAvailable() {
  * Salva dados para a nuvem (Firebase)
  */
 function saveToCloud() {
+  // Add password prompt
+  const password = prompt("Digite a senha para salvar:");
+  if (password !== "bob") {
+    alert("Senha incorreta. Operação cancelada.");
+    return;
+  }
+  // End of added password prompt
+
   if (typeof firebase === 'undefined' || !firebase.apps.length) {
     alert('Firebase não está disponível. Por favor, configure o Firebase primeiro.');
     return;
