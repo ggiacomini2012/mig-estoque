@@ -5,19 +5,20 @@ document.addEventListener('DOMContentLoaded', function() {
 function renderEstoqueTable() {
   // Data structure defining the table layout
   const tableData = [
-    { andar: '10', tamanho: 'GG', colunas: ['A', 'B', 'C', 'D'] },
-    { andar: '9', tamanho: 'GG', colunas: ['A', 'B', 'C', 'D'] },
+    { andar: '10', tamanho: 'GG', colunas: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] },
+    { andar: '9', tamanho: 'GG', colunas: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] },
     
-    { andar: '8', tamanho: 'G', colunas: ['A', 'B', 'C', 'D'] },
-    { andar: '7', tamanho: 'G', colunas: ['A', 'B', 'C', 'D'] },
-    { andar: '6', tamanho: 'G', colunas: ['A', 'B', 'C', 'D'] },
+    { andar: '8', tamanho: 'G', colunas: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] },
+    { andar: '7', tamanho: 'G', colunas: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] },
+    { andar: '6', tamanho: 'G', colunas: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] },
     
-    { andar: '5', tamanho: 'M', colunas: ['A', 'B', 'C', 'D'] },
-    { andar: '4', tamanho: 'M', colunas: ['A', 'B', 'C', 'D'] },
-    { andar: '3', tamanho: 'M', colunas: ['A', 'B', 'C', 'D'] },
+    { andar: '5', tamanho: 'M', colunas: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] },
+    { andar: '4', tamanho: 'M', colunas: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] },
+    { andar: '3', tamanho: 'M', colunas: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] },
     
-    { andar: '2', tamanho: 'P', colunas: ['A', 'B', 'C', 'D'], especial: { coluna: 'D', label: 'XGG/EXG' } },
-    { andar: '1', tamanho: 'P', colunas: ['A', 'B', 'C', 'D'], especial: { coluna: 'D', label: 'XGG/EXG' } }
+    { andar: '2', tamanho: 'P', colunas: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'], especial: { coluna: 'D', label: 'XGG/EXG' } },
+    { andar: '1', tamanho: 'P', colunas: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'], especial: { coluna: 'D', label: 'XGG/EXG' } },
+    { andar: 'PISO', tamanho: 'CAIXAS', colunas: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27'] }
   ];
 
   // Get container
@@ -32,7 +33,9 @@ function renderEstoqueTable() {
   const thead = document.createElement('thead');
   const headerRow = document.createElement('tr');
   
-  ['ANDAR', 'TAMANHO', 'A', 'B', 'C', 'D'].forEach(header => {
+  const headers = ['ANDAR', 'TAMANHO', 'A', 'B', 'C', 'D', 'FEMININO', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+  
+  headers.forEach(header => {
     const th = document.createElement('th');
     th.textContent = header;
     headerRow.appendChild(th);
@@ -48,57 +51,95 @@ function renderEstoqueTable() {
     const tr = document.createElement('tr');
     tr.id = `andar-${row.andar}-${row.tamanho}`;
     
-    // Andar cell
-    const andarCell = document.createElement('td');
-    andarCell.textContent = row.andar;
-    tr.appendChild(andarCell);
-    
-    // Tamanho cell
-    const tamanhoCell = document.createElement('td');
-    tamanhoCell.textContent = row.tamanho;
-    tr.appendChild(tamanhoCell);
-    
-    // Column cells with subtables
-    row.colunas.forEach(coluna => {
-      const colCell = document.createElement('td');
-      const colIndex = coluna.charCodeAt(0) - 65; // Convert A->0, B->1, etc.
-      
-      // Create subtable
-      const subtable = document.createElement('table');
-      subtable.id = `subtable-${row.andar}-${coluna}`;
-      subtable.className = 'subtable';
-      subtable.setAttribute('border', '1');
-      
-      // Create subtable header row
-      const subtableRow = document.createElement('tr');
-      
-      const headers = ['Qtd.', 'COD.', 'COR'];
-      
-      // Add special column for XGG/EXG if needed
-      if (row.especial && row.especial.coluna === coluna) {
-        headers.push(row.especial.label);
-      }
-      
-      headers.forEach((header, index) => {
-        const subtableTh = document.createElement('td');
-        subtableTh.textContent = header;
-        subtableTh.classList.add('sortable-header');
-        subtableTh.dataset.colIndex = index;
+    // Iterate through defined headers to ensure consistent column structure
+    headers.forEach(header => {
+      const td = document.createElement('td');
 
-        if (header === 'Qtd.') {
-          subtableTh.dataset.sortType = 'numeric';
+      if (header === 'ANDAR') {
+        td.textContent = row.andar;
+      } else if (header === 'TAMANHO') {
+        td.textContent = row.tamanho;
+      } else if (header === 'FEMININO') {
+        // FEMININO column shows the same as TAMANHO, except for PISO
+        if (row.andar !== 'PISO') {
+            td.textContent = row.tamanho;
         } else {
-          subtableTh.dataset.sortType = 'text';
+            td.textContent = ''; // Empty for PISO row
         }
+      } else {
+        // Handle A-Z columns and PISO numeric columns
+        if (row.andar !== 'PISO') {
+          // For floors 1-10, check if the column exists in row.colunas (A-Z)
+          if (row.colunas.includes(header)) {
+            // Create subtable for letter columns
+            const subtable = document.createElement('table');
+            subtable.id = `subtable-${row.andar}-${header}`;
+            subtable.className = 'subtable';
+            subtable.setAttribute('border', '1');
 
-        subtableTh.style.cursor = 'pointer';
+            const subtableRow = document.createElement('tr');
+            const subHeaders = ['Qtd.', 'COD.', 'COR'];
 
-        subtableRow.appendChild(subtableTh);
-      });
-      
-      subtable.appendChild(subtableRow);
-      colCell.appendChild(subtable);
-      tr.appendChild(colCell);
+            if (row.especial && row.especial.coluna === header) {
+              subHeaders.push(row.especial.label);
+            }
+
+            subHeaders.forEach((subHeader, index) => {
+              const subtableTh = document.createElement('td');
+              subtableTh.textContent = subHeader;
+              subtableTh.classList.add('sortable-header');
+              subtableTh.dataset.colIndex = index;
+              subtableTh.dataset.sortType = (subHeader === 'Qtd.') ? 'numeric' : 'text';
+              subtableTh.style.cursor = 'pointer';
+              subtableRow.appendChild(subtableTh);
+            });
+
+            subtable.appendChild(subtableRow);
+            td.appendChild(subtable);
+          } else {
+            // If column doesn't exist for this row (shouldn't happen with current data)
+            td.textContent = '';
+          }
+        } else {
+          // For PISO row, map letter headers (A-Z) to numeric columns (1-26)
+          if (header >= 'A' && header <= 'Z') {
+            const pisoColNum = (header.charCodeAt(0) - 'A'.charCodeAt(0) + 1).toString();
+            if (row.colunas.includes(pisoColNum)) {
+              // Create subtable for this PISO numeric column
+              const subtable = document.createElement('table');
+              subtable.id = `subtable-${row.andar}-${pisoColNum}`; // Use PISO number in ID
+              subtable.className = 'subtable';
+              subtable.setAttribute('border', '1');
+
+              const subtableRow = document.createElement('tr');
+              const subHeaders = ['Qtd.', 'COD.', 'COR']; // PISO uses standard subheaders
+
+              subHeaders.forEach((subHeader, index) => {
+                const subtableTh = document.createElement('td');
+                subtableTh.textContent = subHeader;
+                subtableTh.classList.add('sortable-header');
+                subtableTh.dataset.colIndex = index;
+                subtableTh.dataset.sortType = (subHeader === 'Qtd.') ? 'numeric' : 'text';
+                subtableTh.style.cursor = 'pointer';
+                subtableRow.appendChild(subtableTh);
+              });
+
+              subtable.appendChild(subtableRow);
+              td.appendChild(subtable);
+            } else {
+              // Corresponding PISO column number doesn't exist in row.colunas
+              td.textContent = '';
+            }
+          } else {
+            // Handles headers like ANDAR, TAMANHO, FEMININO which are processed earlier
+            // or any unexpected headers. Ensure non-mapped cells are empty.
+             if (header !== 'ANDAR' && header !== 'TAMANHO' && header !== 'FEMININO') {
+               td.textContent = '';
+             }
+          }
+        }
+      }
+      tr.appendChild(td);
     });
     
     tbody.appendChild(tr);
