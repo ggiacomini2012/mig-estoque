@@ -1,0 +1,16 @@
+observe o formato do arquivo mudanças-atuais-generic.txt
+
+crie um arquivo no diretorio history respeitando a ordem crescendo no nome dos arquivo
+exemplo se ja existe um 10-nome-descritivo.txt crie o 11-nome-descritivo.txt 
+
+sempre em ardem crescente
+
+o nome do arquivo deve descrever o que ele propoe de atualizacao ou criacao
+
+o conteudo do arquivo mudanças-atuais-generic.txt sera copiado
+
+a parte *editar deve ser apagada e subtituida por uma versão minimalista, consisa e melhorada do paragrafo a seguir:
+
+vamos criar um todo list para que implementemos o que esta no arquivo 2-analise-criacao-salvamento-tabela-a-z.txt
+
+crie um promp melhorado do que mensionei, minimalista e consiso
