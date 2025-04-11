@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Tabela de Estoque</title>
   <link rel="stylesheet" href="estilo.css">
@@ -13,18 +14,22 @@
   <!-- Firebase Monitor -->
   <script src="firebase-monitor.js"></script>
 </head>
+
 <body>
-  <h1>tabela de estoque</h1>
-  
+  <!-- Wrapper for top bar buttons -->
+  <div id="main-controls-wrapper"></div>
+
+  <!-- Wrapper for main content sections -->
+  <div id="content-sections-wrapper"></div>
+
   <!-- Container for dynamically rendered table -->
   <div id="table-container"></div>
-  
+
   <!-- Scripts existentes -->
   <script src="render-table.js"></script>
   <script src="script.js"></script>
   <!-- <script src="auto-save.js"></script> -->
   <script src="buscador.js" defer></script>
-  <script src="clear-data.js"></script>
   <script src="editable.js"></script>
   <script src="input-parser.js" defer></script>
   <script src="input-preview.js" defer></script>
@@ -32,14 +37,16 @@
   <script src="row-remover.js" defer></script>
   <script src="table-editor.js"></script>
   <script src="fix-duplicate-buttons.js" defer></script>
-  <script src="command-history.js" defer></script>
   <script src="table-sorter.js" defer></script>
- 
-  
+
+
   <!-- Script for JSON export/import -->
   <script src="export-import.js" defer></script>
-  
+
   <!-- Script for cloud sync with Firebase -->
   <script src="cloud-sync.js" defer></script>
+
+  <script src="command-history.js" defer></script>
 </body>
+
 </html>
