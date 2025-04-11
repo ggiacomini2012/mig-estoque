@@ -24,20 +24,16 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("[Preview Log] Created previewContainer element (div).");
     previewContainer.classList.add('input-preview-container');
     
-    // Não precisamos mais buscar o inputContainer aqui, já temos ele.
-    // const inputContainer = document.getElementById('input-parser-container'); 
-    
-    // Inserir o preview DEPOIS do container do input
-    if (inputContainer.parentNode) { // Check only parentNode now
-        console.log(`[Preview Log] Found input container's parent (<${inputContainer.parentNode.tagName}>). Attempting to insert previewContainer after the container.`);
-        inputContainer.parentNode.insertBefore(previewContainer, inputContainer.nextSibling);
-        console.log(`[Preview Log] Appended previewContainer. Parent: <${previewContainer.parentNode.tagName}>. Should be visible after element #${inputContainer.id}.`);
+    // Inserir o preview dentro do wrapper de conteúdo
+    const contentWrapper = document.getElementById('content-sections-wrapper'); // Target new wrapper
+
+    if (contentWrapper) {
+        console.log(`[Preview Log] Found content sections wrapper. Attempting to insert previewContainer.`);
+        contentWrapper.appendChild(previewContainer);
+        console.log(`[Preview Log] Appended previewContainer to content sections wrapper. Parent: <${previewContainer.parentNode.tagName}>.`);
     } else {
-        // This case is less likely if inputContainer was found, but keep as fallback
-        console.warn("[Preview Log] Could not find input container's parent. Appending previewContainer to <body> as fallback.");
+        console.warn("[Preview Log] Could not find content sections wrapper. Appending previewContainer to <body> as fallback.");
         document.body.appendChild(previewContainer);
-        console.log(`[Preview Log] Appended previewContainer to <body>. Parent: <${previewContainer.parentNode.tagName}>. Should be visible at the end of the body.`);
-        console.warn("[Preview] Não foi possível encontrar o parentNode do input container, adicionando preview ao final do body.");
     }
     
     // Adicionar evento de entrada no input
