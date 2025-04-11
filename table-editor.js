@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Add button
       const addBtn = document.createElement('button');
+      addBtn.className = 'add-row-btn';
       addBtn.textContent = '+';
       addBtn.onclick = () => {
         // Get parent cell info to generate proper code
