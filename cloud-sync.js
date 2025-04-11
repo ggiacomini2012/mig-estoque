@@ -32,10 +32,21 @@ function createCloudSyncButtons() {
   buttonContainer.appendChild(saveCloudButton);
   buttonContainer.appendChild(syncCloudButton);
   
-  // Adicionar o container ao DOM, após a tabela
-  const tableContainer = document.getElementById('table-container');
-  if (tableContainer) {
-    tableContainer.parentNode.insertBefore(buttonContainer, tableContainer.nextSibling);
+  // Adicionar ao wrapper principal (top bar)
+  const mainWrapper = document.getElementById('main-controls-wrapper');
+  if (mainWrapper) {
+    // Find the action buttons container within the main wrapper
+    const actionButtonsContainer = mainWrapper.querySelector('.action-buttons');
+    if (actionButtonsContainer) {
+      // Append cloud buttons inside the action buttons container
+      actionButtonsContainer.appendChild(buttonContainer);
+    } else {
+      console.error('Action buttons container not found within main wrapper. Appending cloud buttons directly.');
+      mainWrapper.appendChild(buttonContainer); // Fallback: append directly to main wrapper
+    }
+  } else {
+    console.error('Main controls wrapper not found. Appending cloud sync buttons to body as fallback.');
+    document.body.appendChild(buttonContainer); // Fallback: append to body
   }
 }
 
