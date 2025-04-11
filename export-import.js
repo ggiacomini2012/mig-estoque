@@ -9,10 +9,37 @@ document.addEventListener('DOMContentLoaded', function() {
   importButton.textContent = 'Importar JSON';
   importButton.style.marginLeft = '10px';
   
-  // Add buttons to DOM next to title
-  const title = document.querySelector('h1');
-  title.parentNode.insertBefore(importButton, title.nextSibling);
-  title.parentNode.insertBefore(exportButton, title.nextSibling);
+  // Create clear button (moved from clear-data.js)
+  const clearButton = document.createElement('button');
+  clearButton.textContent = 'Limpar Dados';
+  clearButton.style.marginLeft = '10px';
+  
+  // Criar o container para os botões
+  const buttonContainer = document.createElement('div');
+  buttonContainer.id = 'action-buttons-container'; // Changed ID for clarity
+  buttonContainer.classList.add('action-buttons'); // Adiciona uma classe para estilização
+  // Remove inline styles handled by CSS
+  // buttonContainer.style.display = 'inline-block'; 
+  // buttonContainer.style.marginLeft = '10px';
+
+  // Adicionar botões ao container
+  buttonContainer.appendChild(exportButton);
+  buttonContainer.appendChild(importButton);
+  buttonContainer.appendChild(clearButton); // Add clear button here
+
+  // Adicionar ao wrapper principal
+  const mainWrapper = document.getElementById('main-controls-wrapper');
+  if (mainWrapper) {
+    mainWrapper.appendChild(buttonContainer); // Adiciona o container de botões ao wrapper principal
+  } else {
+    console.error('Main controls wrapper not found. Appending export/import buttons to body as fallback.');
+    const title = document.querySelector('h1'); // Fallback: insert after title
+    if(title && title.parentNode) {
+      title.parentNode.insertBefore(buttonContainer, title.nextSibling);
+    } else {
+      document.body.appendChild(buttonContainer);
+    }
+  }
   
   // Function to extract table data
   function extractTableData() {
@@ -187,5 +214,42 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     fileInput.click();
+  };
+
+  // Clear button click handler (moved from clear-data.js)
+  clearButton.onclick = function() {
+    if (confirm('Tem certeza que deseja limpar todos os dados?')) {
+      // Limpar localStorage
+      localStorage.clear();
+      
+      // Limpar tabelas - manter apenas cabeçalhos
+      const subtables = document.querySelectorAll('.subtable');
+      subtables.forEach(table => {
+        // Manter apenas a primeira linha (cabeçalho)
+        while (table.rows.length > 1) {
+          table.deleteRow(1);
+        }
+      });
+      
+      // Limpar resultados da busca
+      const resultsDiv = document.getElementById('resultados');
+      if (resultsDiv) {
+          resultsDiv.innerHTML = '';
+      }
+
+      // Limpar preview do input
+      const previewContainer = document.querySelector('.input-preview-container');
+      if (previewContainer) {
+        previewContainer.innerHTML = '';
+      }
+
+      // Limpar input do parser
+      const inputParserInput = document.querySelector('#input-parser-container input');
+      if (inputParserInput) {
+        inputParserInput.value = '';
+      }
+
+      alert('Dados limpos com sucesso!');
+    }
   };
 }); 
