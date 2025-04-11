@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const header = document.querySelector('h1');
   const searchDiv = document.createElement('div');
   
+  // Criar o wrapper para a busca e os resultados
+  const searchWrapper = document.createElement('div');
+  searchWrapper.id = 'search-results-wrapper';
+  searchWrapper.classList.add('search-container');
+  
   const searchInput = document.createElement('input');
   searchInput.setAttribute('type', 'text');
   searchInput.setAttribute('placeholder', 'Digite o código ou cor para buscar');
@@ -12,8 +17,23 @@ document.addEventListener('DOMContentLoaded', function() {
   resultsDiv.id = 'resultados';
   
   searchDiv.appendChild(searchInput);
-  header.after(searchDiv);
-  searchDiv.after(resultsDiv);
+  // Adicionar busca e resultados ao wrapper
+  searchWrapper.appendChild(searchDiv);
+  searchWrapper.appendChild(resultsDiv);
+  // Adicionar ao wrapper de conteúdo
+  const contentWrapper = document.getElementById('content-sections-wrapper'); // Target new wrapper
+
+  if (contentWrapper) {
+    contentWrapper.appendChild(searchWrapper); // Add search wrapper to content wrapper
+  } else {
+    console.error('Content sections wrapper not found. Appending search container after header as fallback.');
+    const header = document.querySelector('h1'); // Fallback: insert after header
+    if(header) {
+       header.after(searchWrapper);
+    } else {
+      document.body.appendChild(searchWrapper);
+    }
+  }
 
   // Variável para armazenar o timer
   let searchTimer;
