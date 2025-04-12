@@ -18,7 +18,7 @@ function renderEstoqueTable() {
     
     { andar: '2', tamanho: 'P', colunas: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'], especial: { coluna: 'D', label: 'XGG/EXG' } },
     { andar: '1', tamanho: 'P', colunas: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'], especial: { coluna: 'D', label: 'XGG/EXG' } },
-    { andar: 'PISO', tamanho: 'CAIXAS', colunas: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27'] }
+    { andar: '0', tamanho: 'CAIXAS', colunas: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27'] }
   ];
 
   // Get container
@@ -60,15 +60,15 @@ function renderEstoqueTable() {
       } else if (header === 'TAMANHO') {
         td.textContent = row.tamanho;
       } else if (header === 'FEMININO') {
-        // FEMININO column shows the same as TAMANHO, except for PISO
-        if (row.andar !== 'PISO') {
+        // FEMININO column shows the same as TAMANHO, except for 0
+        if (row.andar !== '0') {
             td.textContent = row.tamanho;
         } else {
-            td.textContent = ''; // Empty for PISO row
+            td.textContent = ''; // Empty for 0 row
         }
       } else {
-        // Handle A-Z columns and PISO numeric columns
-        if (row.andar !== 'PISO') {
+        // Handle A-Z columns and 0 numeric columns
+        if (row.andar !== '0') {
           // For floors 1-10, check if the column exists in row.colunas (A-Z)
           if (row.colunas.includes(header)) {
             // Create subtable for letter columns
@@ -101,18 +101,18 @@ function renderEstoqueTable() {
             td.textContent = '';
           }
         } else {
-          // For PISO row, map letter headers (A-Z) to numeric columns (1-26)
+          // For 0 row, map letter headers (A-Z) to numeric columns (1-26)
           if (header >= 'A' && header <= 'Z') {
-            const pisoColNum = (header.charCodeAt(0) - 'A'.charCodeAt(0) + 1).toString();
-            if (row.colunas.includes(pisoColNum)) {
-              // Create subtable for this PISO numeric column
+            const zeroColNum = (header.charCodeAt(0) - 'A'.charCodeAt(0) + 1).toString();
+            if (row.colunas.includes(zeroColNum)) {
+              // Create subtable for this 0 numeric column
               const subtable = document.createElement('table');
-              subtable.id = `subtable-${row.andar}-${pisoColNum}`; // Use PISO number in ID
+              subtable.id = `subtable-${row.andar}-${zeroColNum}`; // Use 0 number in ID
               subtable.className = 'subtable';
               subtable.setAttribute('border', '1');
 
               const subtableRow = document.createElement('tr');
-              const subHeaders = ['Qtd.', 'COD.', 'COR']; // PISO uses standard subheaders
+              const subHeaders = ['Qtd.', 'COD.', 'COR']; // 0 uses standard subheaders
 
               subHeaders.forEach((subHeader, index) => {
                 const subtableTh = document.createElement('td');
@@ -127,7 +127,7 @@ function renderEstoqueTable() {
               subtable.appendChild(subtableRow);
               td.appendChild(subtable);
             } else {
-              // Corresponding PISO column number doesn't exist in row.colunas
+              // Corresponding 0 column number doesn't exist in row.colunas
               td.textContent = '';
             }
           } else {
