@@ -1,0 +1,299 @@
+{
+  "tabela": [
+    {
+      "linha": 0,
+      "coluna": "A",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "B",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "C",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "D",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "F",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "G",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "H",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "I",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "J",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "K",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "L",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "M",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "N",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "O",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "P",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "Q",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "R",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "S",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "T",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "U",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "V",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "W",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "X",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "Y",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "Z",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    },
+    {
+      "linha": 0,
+      "coluna": "[",
+      "itens": [
+        {
+          "qtd": 1,
+          "cod": "333",
+          "cor": "preto"
+        }
+      ]
+    }
+  ],
+  "historicoDeComandos": [
+    "a0 preto 333, b0 preto 333, c0 preto 333, d0 preto 333, e0 preto 333, f0 preto 333, g0 preto 333, h0 preto 333, i0 preto 333, j0 preto 333, k0 preto 333, l0 preto 333, m0 preto 333, n0 preto 333, o0 preto 333, p0 preto 333, q0 preto 333, r0 preto 333, s0 preto 333, t0 preto 333, u0 preto 333, v0 preto 333, w0 preto 333, x0 preto 333, y0 preto 333, z0 preto 333",
+    "a10 preto 333, b10 preto 333, c10 preto 333, d10 preto 333, e10 preto 333, f10 preto 333, g10 preto 333, h10 preto 333, i10 preto 333, j10 preto 333, k10 preto 333, l10 preto 333, m10 preto 333, n10 preto 333, o10 preto 333, p10 preto 333, q10 preto 333, r10 preto 333, s10 preto 333, t10 preto 333, u10 preto 333, v10 preto 333, w10 preto 333, x10 preto 333, y10 preto 333, z10 preto 333",
+    "a0 preto 233",
+    "f10 preto 333",
+    "a10 preto 333",
+    "e10 preto 392",
+    "a2 preto 333"
+  ]
+}
