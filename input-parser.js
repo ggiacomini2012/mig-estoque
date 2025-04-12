@@ -177,16 +177,47 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         console.log(`[Parser] SUCESSO: Linha do andar ${andar} encontrada.`);
 
-        // --- Encontrar a Célula (Coluna) --- 
-        const colIndex = colLetter.charCodeAt(0) - 64 + 1; // A=2, B=3...
-        const targetCell = row.cells[colIndex];
+        // --- Encontrar o Índice da Coluna DINAMICAMENTE ---
+        let colIndex = -1;
+        // Assume header is the first row in the thead of the main table
+        const headerRow = document.querySelector('#estoque-table thead tr'); 
+        if (headerRow) {
+            // Find the index of the cell whose text content matches the column letter
+            for (let i = 0; i < headerRow.cells.length; i++) {
+                // Compare header text (trimmed, uppercase) with the target column letter
+                if (headerRow.cells[i].textContent.trim().toUpperCase() === colLetter) {
+                    colIndex = i;
+                    break; // Found the index, stop searching
+                }
+            }
+        } else {
+             // Critical error if the header row itself cannot be found
+             console.error(`[Parser] ERRO CRÍTICO: Não foi possível encontrar a linha de cabeçalho (thead tr) em #estoque-table.`);
+             alert(`Erro crítico: Cabeçalho da tabela principal (#estoque-table thead tr) não encontrado. A estrutura da página pode estar incorreta.`);
+             hasErrors = true; // Mark error to prevent further processing for this update
+             continue; // Skip to the next tableKey update
+        }
+
+        // Check if the column letter was actually found in the header
+        if (colIndex === -1) {
+             console.error(`[Parser] ERRO ao aplicar para ${colLetter}${andar}: Coluna "${colLetter}" não encontrada no cabeçalho da tabela #estoque-table.`);
+             alert(`Erro ao aplicar atualizações para ${colLetter}${andar}: Coluna "${colLetter}" não existe no cabeçalho da tabela.`);
+             hasErrors = true;
+             continue; // Skip to the next tableKey update
+        }
+        console.log(`[Parser] INFO: Índice da coluna ${colLetter} encontrado dinamicamente no cabeçalho: ${colIndex}`);
+
+        // --- Encontrar a Célula (Coluna) usando o índice correto --- 
+        const targetCell = row.cells[colIndex]; // Use the dynamically found index
+
         if (!targetCell) {
-            console.error(`[Parser] ERRO ao aplicar: Coluna ${colLetter} (índice ${colIndex}) não encontrada na linha do andar ${andar}.`);
-            alert(`Erro ao aplicar atualizações: Coluna ${colLetter} não encontrada no andar ${andar}.`);
+            // This error could happen if the data row 'tr' has fewer 'td' cells than the header row 'th' cells.
+            console.error(`[Parser] ERRO ao aplicar para ${colLetter}${andar}: Célula no índice ${colIndex} não encontrada na linha do andar ${andar}. A linha parece ter menos colunas que o cabeçalho.`);
+            alert(`Erro ao aplicar atualizações para ${colLetter}${andar}: Estrutura da linha inválida no andar ${andar}.`);
             hasErrors = true;
             continue;
         }
-         console.log(`[Parser] SUCESSO: Célula ${colLetter}${andar} encontrada.`);
+         console.log(`[Parser] SUCESSO: Célula ${colLetter}${andar} (índice ${colIndex}) encontrada.`);
 
         // --- Encontrar a Subtabela --- 
         let targetTable = updateData.targetTable; // Reutiliza se já encontrada
