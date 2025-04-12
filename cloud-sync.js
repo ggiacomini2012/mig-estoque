@@ -112,6 +112,9 @@ function saveToCloud() {
     const db = firebase.database();
     const syncRef = db.ref('syncData');
     
+    // Log the data being saved
+    console.log('Saving data to cloud:', JSON.stringify(dataToSave, null, 2));
+
     // Salvar no Firebase
     syncRef.set(dataToSave)
       .then(() => {
@@ -140,16 +143,23 @@ function extractTableDataForCloud(table) {
     return tabelaData;
   }
   
-  // Processar cada linha da tabela
+  // Processar cada linha da tabela (andares 0-10+)
   for (let i = 1; i < table.rows.length; i++) {
     const row = table.rows[i];
-    const andar = row.cells[0].textContent.trim();
+    const andar = row.cells[0].textContent.trim(); // Assumes floor number is in the first cell
     
-    // Processar colunas A, B, C, D (cellIndex 2, 3, 4, 5)
-    for (let colIndex = 2; colIndex <= 5; colIndex++) {
-      if (row.cells.length <= colIndex) continue;
+    // Processar colunas A-Z (cellIndex 2 a 27), pulando a coluna 'F' (index 7)
+    for (let colIndex = 2; colIndex <= 27; colIndex++) {
+      // Skip column 'F' (assumed to be 'Feminino')
+      /* // Temporarily removed for testing
+      if (colIndex === 7) { 
+          continue;
+      }
+      */
+
+      if (row.cells.length <= colIndex) continue; // Skip if cell doesn't exist
       
-      const colLetter = String.fromCharCode(63 + colIndex); // 65 é 'A', mas começamos na coluna 2
+      const colLetter = String.fromCharCode(65 + colIndex - 2); // Convert index (2-27) to letter (A-Z)
       const subtable = row.cells[colIndex].querySelector('.subtable');
       
       if (subtable && subtable.rows.length > 1) {
@@ -169,7 +179,8 @@ function extractTableDataForCloud(table) {
         
         if (itens.length > 0) {
           tabelaData.push({
-            linha: parseInt(andar) || 0,
+            // Use floor number directly (can be '0', '1', ..., '10')
+            linha: andar, 
             coluna: colLetter,
             itens: itens
           });
@@ -184,6 +195,7 @@ function extractTableDataForCloud(table) {
 /**
  * Importa dados da tabela de JSON
  * Essa função usa uma abordagem independente das funções globais
+ * NOTE: Assumes floor numbers are strings ('0', '1', etc.) matching cell content
  */
 function importTableFromCloud(jsonData) {
   if (!jsonData || !jsonData.tableData) {
@@ -193,6 +205,7 @@ function importTableFromCloud(jsonData) {
   
   try {
     const tabelaData = jsonData.tableData;
+    console.log('Checking if tableData is array. Type:', typeof tabelaData, 'Is Array:', Array.isArray(tabelaData), 'Value:', tabelaData); 
     if (!Array.isArray(tabelaData)) {
       console.error('Os dados da tabela não são um array válido');
       return false;
@@ -208,43 +221,61 @@ function importTableFromCloud(jsonData) {
     
     // Importar dados
     tabelaData.forEach(item => {
-      if (item.linha && item.coluna && item.itens) {
-        const colIndex = item.coluna.charCodeAt(0) - 63; // Converter 'A' para índice de coluna
-        const rowIndex = item.linha;
+      // Check for required fields
+      if (item.linha !== undefined && item.coluna && item.itens) { 
+        const colIndex = item.coluna.charCodeAt(0) - 63; // Convert 'A'-'Z' to index 2-27
+        const rowIndexStr = String(item.linha); // Ensure floor is treated as string for lookup
+
+        // Check if colIndex is valid (A=2 to Z=27)
+        if (colIndex < 2 || colIndex > 27) {
+            console.warn(`Invalid column letter '${item.coluna}' found in cloud data. Skipping.`);
+            return; 
+        }
         
-        // Encontrar a linha da tabela correta
+        // Encontrar a linha da tabela correta pelo conteúdo da primeira célula (andar)
         const mainTable = document.getElementById('estoque-table');
         let targetRow = null;
         
         for (let i = 1; i < mainTable.rows.length; i++) {
-          if (mainTable.rows[i].cells[0].textContent.trim() === String(rowIndex)) {
+          if (mainTable.rows[i].cells.length > 0 && mainTable.rows[i].cells[0].textContent.trim() === rowIndexStr) {
             targetRow = mainTable.rows[i];
             break;
           }
         }
         
         if (targetRow) {
-          const subtable = targetRow.cells[colIndex].querySelector('.subtable');
-          
-          if (subtable) {
-            item.itens.forEach(produto => {
-              const newRow = subtable.insertRow(-1);
+          // Check if target cell exists before accessing it
+          if (targetRow.cells.length > colIndex) {
+              const subtable = targetRow.cells[colIndex].querySelector('.subtable');
               
-              const qtdCell = newRow.insertCell(0);
-              const codCell = newRow.insertCell(1);
-              const corCell = newRow.insertCell(2);
-              
-              qtdCell.textContent = produto.qtd;
-              codCell.textContent = produto.cod;
-              corCell.textContent = produto.cor;
-              
-              // Adicionar atributo contenteditable="true" para cada célula
-              qtdCell.setAttribute('contenteditable', 'true');
-              codCell.setAttribute('contenteditable', 'true');
-              corCell.setAttribute('contenteditable', 'true');
-            });
+              if (subtable) {
+                item.itens.forEach(produto => {
+                  const newRow = subtable.insertRow(-1);
+                  
+                  const qtdCell = newRow.insertCell(0);
+                  const codCell = newRow.insertCell(1);
+                  const corCell = newRow.insertCell(2);
+                  
+                  qtdCell.textContent = produto.qtd || 0; // Default to 0 if undefined
+                  codCell.textContent = produto.cod || ''; // Default to empty if undefined
+                  corCell.textContent = produto.cor || ''; // Default to empty if undefined
+                  
+                  // Adicionar atributo contenteditable="true" para cada célula
+                  qtdCell.setAttribute('contenteditable', 'true');
+                  codCell.setAttribute('contenteditable', 'true');
+                  corCell.setAttribute('contenteditable', 'true');
+                });
+              } else {
+                 console.warn(`Subtable not found for row '${rowIndexStr}', column '${item.coluna}' (index ${colIndex}). Skipping item.`);
+              }
+          } else {
+              console.warn(`Target cell index ${colIndex} (column '${item.coluna}') out of bounds for row '${rowIndexStr}'. Skipping item.`);
           }
+        } else {
+            console.warn(`Target row with floor '${rowIndexStr}' not found in table. Skipping item.`);
         }
+      } else {
+          console.warn('Skipping item with missing linha, coluna, or itens:', item);
       }
     });
     
@@ -288,6 +319,9 @@ function syncFromCloud() {
           return;
         }
         
+        // Log the data synced from cloud
+        console.log('Data synced from cloud:', JSON.stringify(data, null, 2));
+
         // Importar dados
         if (importTableFromCloud(data)) {
           showSyncSuccess();
