@@ -51,9 +51,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const row = mainTable.rows[i];
       const andar = row.cells[0].textContent.trim();
       
-      // Process each column (A, B, C, D)
-      for (let colIndex = 2; colIndex <= 5; colIndex++) {
-        const colLetter = String.fromCharCode(63 + colIndex); // 65 is 'A', but we start at column 2
+      // Process each relevant column (skip floor and assumed 'Feminino' column)
+      // Iterate from index 2 up to the last cell
+      for (let colIndex = 2; colIndex < row.cells.length; colIndex++) { 
+        // Calculate column letter ('A' for index 2, 'B' for 3, etc.)
+        const colLetter = String.fromCharCode(65 + (colIndex - 2)); 
         const subtable = row.cells[colIndex].querySelector('.subtable');
         
         if (subtable && subtable.rows.length > 1) {
@@ -73,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
           
           if (itens.length > 0) {
             tabelaData.push({
-              linha: parseInt(andar) || 0,
+              linha: parseInt(andar) || 0, // Handles floor '0' correctly
               coluna: colLetter,
               itens: itens
             });
@@ -149,36 +151,41 @@ document.addEventListener('DOMContentLoaded', function() {
               
               // Import data
               importData.tabela.forEach(item => {
-                if (item.linha && item.coluna && item.itens) {
-                  const colIndex = item.coluna.charCodeAt(0) - 63; // Convert 'A' to column index
-                  const rowIndex = item.linha;
+                if (item.linha !== undefined && item.coluna && item.itens) { // Check linha is defined (allows 0)
+                  // Convert column letter ('A', 'B', ...) back to table cell index (A -> 2, B -> 3, ...)
+                  const colIndex = item.coluna.charCodeAt(0) - 65 + 2; 
+                  const rowIndex = item.linha; // Keep original linha value
                   
                   // Find the right table row
                   const mainTable = document.getElementById('estoque-table');
                   let targetRow = null;
                   
                   for (let i = 1; i < mainTable.rows.length; i++) {
-                    if (mainTable.rows[i].cells[0].textContent.trim() === String(rowIndex)) {
+                    // Use String() to handle potential floor '0' comparison
+                    if (mainTable.rows[i].cells[0].textContent.trim() === String(rowIndex)) { 
                       targetRow = mainTable.rows[i];
                       break;
                     }
                   }
                   
                   if (targetRow) {
-                    const subtable = targetRow.cells[colIndex].querySelector('.subtable');
-                    
-                    if (subtable) {
-                      item.itens.forEach(produto => {
-                        const newRow = subtable.insertRow(-1);
-                        
-                        const qtdCell = newRow.insertCell(0);
-                        const codCell = newRow.insertCell(1);
-                        const corCell = newRow.insertCell(2);
-                        
-                        qtdCell.textContent = produto.qtd;
-                        codCell.textContent = produto.cod;
-                        corCell.textContent = produto.cor;
-                      });
+                    // Check if the calculated colIndex is valid for the row
+                    if (colIndex >= 2 && colIndex < targetRow.cells.length) { 
+                      const subtable = targetRow.cells[colIndex].querySelector('.subtable');
+                      
+                      if (subtable) {
+                        item.itens.forEach(produto => {
+                          const newRow = subtable.insertRow(-1);
+                          
+                          const qtdCell = newRow.insertCell(0);
+                          const codCell = newRow.insertCell(1);
+                          const corCell = newRow.insertCell(2);
+                          
+                          qtdCell.textContent = produto.qtd;
+                          codCell.textContent = produto.cod;
+                          corCell.textContent = produto.cor;
+                        });
+                      }
                     }
                   }
                 }
