@@ -101,8 +101,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const mainCell = subtable.closest('td');
     const cellIndex = mainCell.cellIndex;
     
-    // Mapeamento de índice para letra (2=A, 3=B, 4=C, 5=D)
-    const colunas = ['', '', 'A', 'B', 'C', 'D'];
-    return colunas[cellIndex];
+    // Mapeamento de índice para letra (2=A, 3=B, ..., 27=Z)
+    const colunas = ['', '', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    return colunas[cellIndex] || `Coluna ${cellIndex}`; // Fallback if index is out of bounds
   }
 }); 
